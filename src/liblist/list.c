@@ -67,5 +67,5 @@ void delNodeAfter(struct list_node* self){
 }
 
 struct list_node* searchNode(const struct list*  self, size_t state){
-
+	return 0;
 }
