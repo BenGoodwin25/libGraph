@@ -1,5 +1,4 @@
 #include "graph.h"
-#include "inct.h"
 
 #define VERSION "0.0.1"
 
