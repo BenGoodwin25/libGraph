@@ -7,52 +7,52 @@
 
 #include "list.h"
 
-struct graph{
+typedef struct _graph{
   size_t maxNodes;
   struct list* adjencyList;
-};
+} Graph;
 
-enum Color{
+typedef enum _color{
   White,
   Grey,
   Black
-};
+} Color;
 
-struct node{
-  enum Color colorNode;
-};
+typedef struct _node{
+    Color colorNode;
+} Node;
 
-struct edge{
-  struct node predecessor;
-  struct node successor;
+typedef struct _edge{
+  Node predecessor;
+  Node successor;
 //  struct weight;// Maybe for later
-};
+} Edge;
 
 //create a graph with the right number of nodes
-void create_graph(struct graph *self, size_t maxNodes);
+void create_graph(Graph *self, size_t maxNodes);
 
 //load a graph from a file
-void load_graph(struct graph *self, FILE *datatext);
+void load_graph(Graph *self, FILE *datatext);
 
 //add a node
-void add_node(struct graph *self, struct node *selfNode);
+void add_node(Graph *self, Node *selfNode);
 
 //add an edge
-void add_edge(struct graph *self, struct edge *selfEdge);
+void add_edge(Graph *self, Edge *selfEdge);
 
 //Delete a node
-void remove_node(struct graph *self, struct edge *selfNode);
+void remove_node(Graph *self, Node *selfNode);
 
 //Delete an edge
-void remove_edge(struct graph *self, struct edge *selfEdge);
+void remove_edge(Graph *self, Edge *selfEdge);
 
 //Display a graph
-void view_graph(struct graph *self);
+void view_graph(Graph *self);
 
 //Save the graph into a file
-void save_graph(struct graph *self, FILE *datatext);
+void save_graph(Graph *self, FILE *datatext);
 
 //Free graph and quit
-void quit(struct graph *self);
+void quit(Graph *self);
 
 #endif

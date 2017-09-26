@@ -20,7 +20,7 @@ bool addNode(struct list* self, size_t state){
   if(other == NULL){
     return false;
   } else {
-    other->state = state;
+    other->node = state;
     other->next = self->first;
     self->first = other;
     return true;
@@ -66,6 +66,6 @@ void delNodeAfter(struct list_node* self){
 
 }
 
-struct list_node* searchNode(const struct list*  self, size_t state){
+/*struct list_node* searchNode(const struct list*  self, size_t state){
 
-}
+}*/

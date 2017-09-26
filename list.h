@@ -3,7 +3,7 @@
 
 
 struct list_node {
-	size_t state; //name of the current elem
+	int node; //name of the current elem
 	struct list_node *next;
 };
 
@@ -33,6 +33,6 @@ bool isEmptyList(const struct list* self);
 size_t listSize(const struct list* self);
 
 //recherche
-struct list_node* searchNode(const struct list* self, size_t state);
+//struct list_node* searchNode(const struct list* self, size_t state);
 
 #endif

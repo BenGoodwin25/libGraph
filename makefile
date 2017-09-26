@@ -3,7 +3,7 @@ COMPILER=gcc
 #Possible Arguments
 CFLAGS=-g -Wall
 #Here insert the library you could need
-LFLAGS=-lm
+LFLAGS=
 
 #Directory
 BUILDDIR=./build
