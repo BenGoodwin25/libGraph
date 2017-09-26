@@ -17,10 +17,10 @@ typedef struct _graph{
 void create_graph(Graph *self, size_t maxNodes);
 
 //load a graph from a file
-void load_graph(Graph *self, FILE *datatext);
+void load_graph(Graph *self, const char *graphFile);
 
 //add a node
-void add_node(Graph *self, Neighbour *selfNode);
+void add_node(Graph *self, int neighbour);
 
 //add an edge
 void add_edge(Graph *self, Neighbour *selfEdge);

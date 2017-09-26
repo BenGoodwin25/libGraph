@@ -7,13 +7,19 @@ void create_graph(Graph *self, size_t maxNodes){
 }
 
 //load a graph from a file
-void load_graph(Graph *self, FILE *datatext){
-
+void load_graph(Graph *self, const char *graphFile){
+  FILE* file = fopen(graphFile, "r");
+  // BORDEL AVEC LE FICHIER
+  fclose(file);
 }
 
 //add a node
-void add_node(Graph *self, Neighbour *selfNode){
-
+void add_node(Graph *self, int neighbour){
+  if(neighbour < self->nbMaxNodes){
+    // TODO: Créer un neighbour
+  } else {
+    // TODO: Retour code erreur
+  }
 }
 
 //add an edge
