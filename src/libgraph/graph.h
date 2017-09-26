@@ -10,7 +10,7 @@
 typedef struct _graph{
   bool isDirected;
   size_t nbMaxNodes;
-  Neighbour[] adjList;
+  Neighbour *adjList;
 } Graph;
 
 //create a graph with the right number of nodes
@@ -20,16 +20,16 @@ void create_graph(Graph *self, size_t maxNodes);
 void load_graph(Graph *self, FILE *datatext);
 
 //add a node
-void add_node(Graph *self, Node *selfNode);
+void add_node(Graph *self, Neighbour *selfNode);
 
 //add an edge
-void add_edge(Graph *self, Edge *selfEdge);
+void add_edge(Graph *self, Neighbour *selfEdge);
 
 //Delete a node
-void remove_node(Graph *self, Node *selfNode);
+void remove_node(Graph *self, Neighbour *selfNode);
 
 //Delete an edge
-void remove_edge(Graph *self, Edge *selfEdge);
+void remove_edge(Graph *self, Neighbour *selfEdge);
 
 //Display a graph
 void view_graph(Graph *self);

@@ -30,12 +30,12 @@ int readUserInput(){
     default:
       break;
   }
+  return 0;
 }
 
 /*
 int main(){
   
-  /*
   while(loop == 1){
     
     switch(choice){
