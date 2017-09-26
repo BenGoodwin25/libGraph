@@ -2,39 +2,34 @@
 #define LIST_H
 
 
-typedef struct _list_node {
-	int data;
-	struct _list_node *next;
-	struct _list_node *previous;
-} List_node;
-
-typedef struct _list {
-	List_node *first;
-} List;
-
+typedef struct _neighbour {
+	int neighbour;
+	int weight;
+	struct _neighbour *nextNeighbour;
+} Neighbour;
 
 //creation
-List createList();
+Neighbour createList();
 
 //destruction
-int destroyList(List* self);
+int destroyList(Neighbour* self);
 
 //ajout
-int addNode(List* self, int data);
+int addNode(Neighbour* self, int neighbour);
 
-//suppression du node ayant la donnée data
-int deleteNode(List* self, int data);
+//suppression du node ayant la donnée neighbour
+int deleteNode(Neighbour* self, int neighbour);
 
 //suppression du premier node
-int delFirstNode(List* self);
+int delFirstNode(Neighbour* self);
 
 //vide
-bool isEmptyList(const List* self);
+bool isEmptyList(const Neighbour* self);
 
 //taille
-size_t listSize(const List* self);
+size_t listSize(const Neighbour* self);
 
 //Recherche
-List_node* searchNode(const List* self, int data);
+Neighbour* searchNode(const Neighbour* self, int neighbour);
 
 #endif

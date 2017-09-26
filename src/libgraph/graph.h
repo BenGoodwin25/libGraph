@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "list.h"
+#include "../liblist/list.h"
 
 typedef struct _graph{
   bool isDirected;
