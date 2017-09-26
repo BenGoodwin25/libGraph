@@ -3,48 +3,48 @@
 
 #include "list.h"
 
-
-List createList(){
-  List self;
-  self.first = NULL;
+Neighbour createList(){
+  Neighbour self;
+  self.nextNeighbour = NULL;
   return self;
 }
 
-int destroyList(List *self){
+int destroyList(Neighbour *self){
   while(!isEmptyList(self)){
     delFirstNode(self);
   }
   return 0;
 }
 
-int addNode(List* self, int data){
-  List_node *other = malloc(sizeof(List_node));
+int addNode(Neighbour* self, int neighbour){
+  Neighbour *other = malloc(sizeof(Neighbour));
   if(other == NULL){
     return 1;
   }
-  other->data = data;
-  other->next = self->first;
-  self->first = other;
+  other->neighbour = neighbour;
+  other->nextNeighbour = self->nextNeighbour;
+  self->nextNeighbour = other;
   return 0;
 }
 
-int deleteNode(List* self, int data){
-  List_node* node;
-  node = self->first;
-  if(node->data == data){
+int deleteNode(Neighbour* self, int neighbour){
+  Neighbour* node;
+  node = self->nextNeighbour;
+  if(node->neighbour == neighbour){
     return delFirstNode(self);
+
   }
   else {
-    while (node->next != NULL && node->next->data != data) {
-      node = node->next;
+    while (node->nextNeighbour != NULL && node->nextNeighbour->neighbour != neighbour) {
+      node = node->nextNeighbour;
     }
-    if (node->next != NULL) {
-      List *tmp = malloc(sizeof(List));
-      tmp->first = node->next->next;
-      free(node->next);
-      node->next = NULL;
-      node->next = tmp->first;
-      tmp->first = NULL;
+    if (node->nextNeighbour != NULL) {
+      Neighbour *tmp = malloc(sizeof(Neighbour));
+      tmp->nextNeighbour = node->nextNeighbour->nextNeighbour;
+      free(node->nextNeighbour);
+      node->nextNeighbour = NULL;
+      node->nextNeighbour = tmp->nextNeighbour;
+      tmp->nextNeighbour = NULL;
       free(tmp);
       return 0;
     }
@@ -52,50 +52,50 @@ int deleteNode(List* self, int data){
   }
 }
 
-int delFirstNode(List* self){
+int delFirstNode(Neighbour* self){
   if(!isEmptyList(self)){
-    List_node *tmp = malloc(sizeof(List_node));
-    tmp->next = self->first->next;
-    free(self->first);
-    self->first=NULL;
-    self->first = tmp->next;
-    tmp->next = NULL;
+    Neighbour *tmp = malloc(sizeof(Neighbour));
+    tmp->nextNeighbour = self->nextNeighbour->nextNeighbour;
+    free(self->nextNeighbour);
+    self->nextNeighbour=NULL;
+    self->nextNeighbour = tmp->nextNeighbour;
+    tmp->nextNeighbour = NULL;
     free(tmp);
     return 0;
   }
   return 1;
 }
 
-bool isEmptyList(const List* self){
-  if(self->first == NULL){
+bool isEmptyList(const Neighbour* self){
+  if(self->nextNeighbour == NULL){
     return true;
   } else {
     return false;
   }
 }
 
-size_t listSize(const List* self){
+size_t listSize(const Neighbour* self){
   if(isEmptyList(self)){
     return 0;
   } else {
-    List visit;
-    visit.first = self->first;
+    Neighbour visit;
+    visit.nextNeighbour = self->nextNeighbour;
     size_t size = 1;
-    while(visit.first->next != NULL){
-      visit.first=visit.first->next;
+    while(visit.nextNeighbour->nextNeighbour != NULL){
+      visit.nextNeighbour=visit.nextNeighbour->nextNeighbour;
       size+=1;
     }
     return size;
   }
 }
 
-List_node* searchNode(const List* self, int data){
-  List_node *tmp;
-  tmp=self->first;
-  while(tmp->data != data && tmp->next != NULL ){
-    tmp = tmp->next;
+Neighbour* searchNode(const Neighbour* self, int neighbour){
+  Neighbour *tmp;
+  tmp=self->nextNeighbour;
+  while(tmp->neighbour != neighbour && tmp->nextNeighbour != NULL ){
+    tmp = tmp->nextNeighbour;
   }
-  if(tmp->data == data){
+  if(tmp->neighbour == neighbour){
     return tmp;
   }
   return NULL;
