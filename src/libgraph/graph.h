@@ -8,26 +8,10 @@
 #include "list.h"
 
 typedef struct _graph{
-  size_t maxNodes;
-  struct list* adjencyList;
+  bool isDirected;
+  size_t nbMaxNodes;
+  Neighbour[] adjList;
 } Graph;
-
-/*typedef enum _color{
-  White,
-  Grey,
-  Black
-} Color;*/
-
-typedef struct _node{
-    int data;
-    //Color colorNode;
-} Node;
-
-typedef struct _edge{
-  Node predecessor;
-  Node successor;
-//  struct weight;// Maybe for later
-} Edge;
 
 //create a graph with the right number of nodes
 void create_graph(Graph *self, size_t maxNodes);

@@ -2,7 +2,8 @@
 
 //create a graph with the right number of nodes
 void create_graph(Graph *self, size_t maxNodes){
-
+  self->nbMaxNodes = maxNodes;
+  self->adjList = malloc(maxNodes*sizeof(Neighbour));
 }
 
 //load a graph from a file

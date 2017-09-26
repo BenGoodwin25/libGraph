@@ -1,37 +1,43 @@
-#include "graph.h"
+#include "menu.h"
 
-#define VERSION "0.0.1"
-
-
-int main(){
+void printHeader(){
   //---------MENU--------------//
   printf("##################################################################\n");
   printf("#                                                                #\n");
-  printf("#                      graph-manager(%s)                      #\n",VERSION);
-  printf("#                                                                #\n");
-  printf("#  !!! Warning there is no input check, follow instructions !!!  #\n");
-  printf("#        !!! Do not put any letter when not prompt to !!!        #\n");
+  printf("#                      graph-manager(%s)                         #\n",VERSION);
   printf("#                                                                #\n");
   printf("##################################################################\n");
-  
-  //TODO Modify the menu to be able to use it with the new graphLib
+}
+
+void printMainMenu(){
+  printf("#\n");
+  printf("#  0 : Create Example Graph\n");
+  printf("#  1 : Create Graph\n");
+  printf("#  2 : Display Graph\n");
+  printf("#  3 : Modify Graph\n");
+  printf("#  4 : Delete Graph\n");
+  printf("#  5 : Quit (and delete Graph)\n");
+  printf("#\n");
+}
+
+int readUserInput(){
+  int choice;
+  printf("Your Choice :");
+  scanf("%d", &choice);
+  switch(choice){
+    case 5:
+      return 1;
+    default:
+      break;
+  }
+}
+
+/*
+int main(){
   
   /*
   while(loop == 1){
-    printf("################################################################\n");
-    printf("#                                                              #\n");
-    printf("#             1 : Create Automate                              #\n");
-    printf("#             2 : Create Second Automate (cannot be displayed) #\n");
-    printf("#             3 : Display Automate                             #\n");
-    printf("#             4 : Display Production Automate                  #\n");
-    printf("#             5 : Modify Automate                              #\n");
-    printf("#             6 : Delete Automate                              #\n");
-    printf("#             7 : Is first automate included in second automate# (isn't working properly)\n");
-    printf("#             8 : Quit (and delete Automate)                   #\n");
-    printf("#                                                              #\n");
-    printf("################################################################\n");
-    printf("Your Choice :");
-    scanf("%d", &choice);
+    
     switch(choice){
       case 1:
         if(fa_created1==true){
@@ -65,7 +71,9 @@ int main(){
           fa_created1 = true;
         }
         break;
-      case 2:
+      case 2:  //TODO Modify the menu to be able to use it with the new graphLib
+  
+
         if(fa_created2==true){
           printf("Automate already created, destroy it before creating a other one\n");
         } else {
@@ -277,7 +285,7 @@ int main(){
         loop=0;
         break;
     }
-  }*/
-  return 0;
-}
+    return 0;
+  }
+}*/
 
