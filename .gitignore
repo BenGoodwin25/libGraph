@@ -1,5 +1,8 @@
 # Build files
 build/
+bin/
+obj/
+lib/
 
 # Prerequisites
 *.d
