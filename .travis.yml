@@ -1,2 +1,2 @@
 language : C
-script : make && ./bin/menu
+script : make
