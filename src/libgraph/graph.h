@@ -12,14 +12,15 @@ typedef struct _graph{
   struct list* adjencyList;
 } Graph;
 
-typedef enum _color{
+/*typedef enum _color{
   White,
   Grey,
   Black
-} Color;
+} Color;*/
 
 typedef struct _node{
-    Color colorNode;
+    int data;
+    //Color colorNode;
 } Node;
 
 typedef struct _edge{

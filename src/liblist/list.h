@@ -2,37 +2,39 @@
 #define LIST_H
 
 
-struct list_node {
-	int node; //name of the current elem
-	struct list_node *next;
-};
+typedef struct _list_node {
+	int data;
+	struct _list_node *next;
+	struct _list_node *previous;
+} List_node;
 
-struct list {
-	struct list_node *first;
-};
+typedef struct _list {
+	List_node *first;
+} List;
+
 
 //creation
-void createList(struct list* self);
+List createList();
 
 //destruction
-void destroyList(struct list* self);
+int destroyList(List* self);
 
 //ajout
-bool addNode(struct list* self, size_t state);
+int addNode(List* self, int data);
 
-//suppression après l'élément courant
-void delNodeAfter(struct list_node* self);
+//suppression du node ayant la donnée data
+int deleteNode(List* self, int data);
 
 //suppression du premier node
-void delFirstNode(struct list* self);
+int delFirstNode(List* self);
 
 //vide
-bool isEmptyList(const struct list* self);
+bool isEmptyList(const List* self);
 
 //taille
-size_t listSize(const struct list* self);
+size_t listSize(const List* self);
 
-//recherche
-//struct list_node* searchNode(const struct list* self, size_t state);
+//Recherche
+List_node* searchNode(const List* self, int data);
 
 #endif

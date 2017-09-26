@@ -4,42 +4,69 @@
 #include "list.h"
 
 
-void createList(struct list* self){
-  self = malloc(sizeof(struct list));
-  self->first=NULL;
+List createList(){
+  List self;
+  self.first = NULL;
+  return self;
 }
 
-void destroyList(struct list* self){
+int destroyList(List *self){
   while(!isEmptyList(self)){
     delFirstNode(self);
   }
+  return 0;
 }
 
-bool addNode(struct list* self, size_t state){
-  struct list_node *other = malloc(sizeof(struct list_node));
+int addNode(List* self, int data){
+  List_node *other = malloc(sizeof(List_node));
   if(other == NULL){
-    return false;
-  } else {
-    other->node = state;
-    other->next = self->first;
-    self->first = other;
-    return true;
+    return 1;
+  }
+  other->data = data;
+  other->next = self->first;
+  self->first = other;
+  return 0;
+}
+
+int deleteNode(List* self, int data){
+  List_node* node;
+  node = self->first;
+  if(node->data == data){
+    return delFirstNode(self);
+  }
+  else {
+    while (node->next != NULL && node->next->data != data) {
+      node = node->next;
+    }
+    if (node->next != NULL) {
+      List *tmp = malloc(sizeof(List));
+      tmp->first = node->next->next;
+      free(node->next);
+      node->next = NULL;
+      node->next = tmp->first;
+      tmp->first = NULL;
+      free(tmp);
+      return 0;
+    }
+    return 1;
   }
 }
 
-void delFirstNode(struct list* self){
+int delFirstNode(List* self){
   if(!isEmptyList(self)){
-    struct list_node *tmp = malloc(sizeof(struct list_node));
+    List_node *tmp = malloc(sizeof(List_node));
     tmp->next = self->first->next;
     free(self->first);
     self->first=NULL;
     self->first = tmp->next;
     tmp->next = NULL;
     free(tmp);
+    return 0;
   }
+  return 1;
 }
 
-bool isEmptyList(const struct list* self){
+bool isEmptyList(const List* self){
   if(self->first == NULL){
     return true;
   } else {
@@ -47,11 +74,11 @@ bool isEmptyList(const struct list* self){
   }
 }
 
-size_t listSize(const struct list* self){
+size_t listSize(const List* self){
   if(isEmptyList(self)){
     return 0;
   } else {
-    struct list visit;
+    List visit;
     visit.first = self->first;
     size_t size = 1;
     while(visit.first->next != NULL){
@@ -62,10 +89,14 @@ size_t listSize(const struct list* self){
   }
 }
 
-void delNodeAfter(struct list_node* self){
-
+List_node* searchNode(const List* self, int data){
+  List_node *tmp;
+  tmp=self->first;
+  while(tmp->data != data && tmp->next != NULL ){
+    tmp = tmp->next;
+  }
+  if(tmp->data == data){
+    return tmp;
+  }
+  return NULL;
 }
-
-/*struct list_node* searchNode(const struct list*  self, size_t state){
-
-}*/
