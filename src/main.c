@@ -1,24 +1,23 @@
 #include "menu.h"
 
 int main(int argc, char* argv[]) {
-  int quit = 0;
+  //int quit = 0;
   Graph graph;
-  create_graph(&graph, 10);
-  if(is_node_exists(&graph, 5)){
-    printf("Node 5 exists\n");
-  } else {
-    printf("Node 5 doesn't exists\n");
-  }
+  create_graph(&graph, 10, false);
   add_node(&graph, 3);
-  if(is_node_exists(&graph, 3)){
-    printf("Node 3 exists\n");
+  add_node(&graph, 5);
+  add_edge(&graph, 3, 5, 1, 0);
+  if(is_edge_exists(&graph, 1)){
+    printf("Edge 1 exists\n");
   } else {
-    printf("Node 3 doesn't exists\n");
+    printf("Edge 1 doesn't exists\n");
   }
+/*
   printHeader();
   while(quit == 0) {
     printMainMenu();
     quit = readUserInput();
   }
+*/
   return 0;
 }
