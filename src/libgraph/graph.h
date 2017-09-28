@@ -5,12 +5,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "list.h"
+#include <list.h>
 
 typedef struct _graph{
   bool isDirected;
   size_t nbMaxNodes;
-  Neighbour *adjList;
+  Neighbour **adjList;
 } Graph;
 
 //create a graph with the right number of nodes
@@ -26,8 +26,11 @@ int add_node(Graph *self, int nodeName);
 //add an edge
 int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight);
 
+// Check if a node already exists (true if exists)
+bool is_node_exists(Graph* self, int nodeName);
+
 // Check if an edge already exists (true if exists)
-bool is_edge_exists(int edgeName);
+bool is_edge_exists(Graph* self, int edgeName);
 
 //Delete a node
 int remove_node(Graph *self, int nodeName);

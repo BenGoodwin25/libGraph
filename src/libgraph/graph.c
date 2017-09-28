@@ -3,7 +3,10 @@
 //create a graph with the right number of nodes
 int create_graph(Graph *self, size_t maxNodes){
   self->nbMaxNodes = maxNodes;
-  self->adjList = malloc(maxNodes*sizeof(Neighbour));
+  self->adjList = malloc(maxNodes*sizeof(Neighbour*));
+  for(int i=0; i < maxNodes; i++){
+    self->adjList[i] = NULL;
+  }
   return 0;
 }
 
@@ -16,13 +19,17 @@ int load_graph(Graph *self, const char *graphFile){
 }
 
 //add a node
-
 int add_node(Graph *self, int nodeName){
   if(nodeName < self->nbMaxNodes){
     // TODO: Gestion erreur
-    //addNode(&self->adjList[nodeName], -1, 0); TODO correct this addNode, dosn't exist anymore ...
+    self->adjList[nodeName] = malloc(sizeof(Neighbour*));
+    self->adjList[nodeName]->neighbour = -1;
+    self->adjList[nodeName]->edgeName = -1;
+    self->adjList[nodeName]->weight = -1;
+    self->adjList[nodeName]->nextNeighbour = NULL;
   } else {
     // TODO: Retour code erreur nom node pas dans liste (OOB)
+    printf("Node OOB\n");
   }
   return 0;
 }
@@ -34,16 +41,21 @@ int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight){
   int error;
 
   if(self->isDirected){
-    error = addEdge(&self->adjList[fromName], toName, edgeName, Weight);
+    error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
   } else {
-    error = addEdge(&self->adjList[fromName], toName, edgeName, Weight);
-    error = addEdge(&self->adjList[toName], fromName, edgeName, Weight);
+    error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
+    error = addEdge(self->adjList[toName], fromName, edgeName, Weight);
   }
   return error;
 }
 
-// Check id an edge already exists
-bool is_edge_exists(int edgeName){
+// Check if a node already exists
+bool is_node_exists(Graph* self, int nodeName){
+  return self->adjList[nodeName] != NULL;
+}
+
+// Check if an edge already exists
+bool is_edge_exists(Graph* self, int edgeName){
   // TODO: implement function for checking existance of an edge
   return false;
 }
