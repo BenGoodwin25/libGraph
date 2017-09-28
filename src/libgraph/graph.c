@@ -68,6 +68,10 @@ int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bo
   return 0;
 }
 
+bool is_node_oob(Graph *self, int nodeName){
+  return self->nbMaxNodes < nodeName;
+}
+
 // Check if a node already exists
 bool is_node_exists(Graph* self, int nodeName){
   return self->adjList[nodeName] != NULL;
@@ -86,10 +90,25 @@ bool is_edge_exists(Graph* self, int edgeName){
 }
 
 //Delete a node
+// error 9 : Node is OOB
+// error 10 : Node unknown
 int remove_node(Graph *self, int nodeName){
+  if(is_node_oob(self, nodeName)){
+    return 9;
+  }
+  if(!is_node_exists(self, nodeName)){
+    return 10;
+  }
   // TODO: Supprimer une node
   // Supression des edge reliées à la node
+  for(int i = 0; i < self->nbMaxNodes; i++){
+    if(is_node_exists(self, i)){
+      //search and delete node from endpoint
+    }
+  }
   // Supression de la node en elle même
+  destroyList(self->adjList[nodeName]);
+  self->adjList[nodeName] = NULL;
   return 0;
 }
 
