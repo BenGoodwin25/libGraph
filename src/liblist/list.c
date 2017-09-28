@@ -14,26 +14,28 @@ Neighbour createList(){
 bool edgeExist(Neighbour *self, int edgeName){
   Neighbour *tmp;
   tmp=self->nextNeighbour;
-  while(tmp->edgeName != edgeName && tmp->nextNeighbour != NULL ){
-    tmp = tmp->nextNeighbour;
+  while(tmp != NULL){
     if(tmp->edgeName == edgeName){
       return true;
     }
+    tmp = tmp->nextNeighbour;
   }
   return false;
 }
 
 int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
-  if(edgeExist(self,edgeName)){
-    printf("Edge already exist");
-    return 2;
+  if(edgeExist(self, edgeName)){
+    printf("Edge already exist\n");
+    return 1;
   }
   Neighbour *other = malloc(sizeof(Neighbour));
   if(other == NULL){
+    printf("Error with memory allocation\n");
     return 1;
   }
   other->neighbour = neighbourTo;
-  other->weight= Weight;
+  other->weight = Weight;
+  other->edgeName = edgeName;
   other->nextNeighbour = self->nextNeighbour;
   self->nextNeighbour = other;
   return 0;
