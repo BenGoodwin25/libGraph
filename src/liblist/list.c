@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "list.h"
 
@@ -33,10 +34,14 @@ bool edgeExist(Neighbour *self, int edgeName){
     return false;
   }
    */
-  return true;
+  return false;
 }
 
 int addNode(Neighbour* self, int neighbour, int Weight){
+  if(nodeExist(self,neighbour)){
+    printf("Node already exist");
+    return 2;
+  }
   Neighbour *other = malloc(sizeof(Neighbour));
   if(other == NULL){
     return 1;
@@ -50,6 +55,10 @@ int addNode(Neighbour* self, int neighbour, int Weight){
 
 int addEdge(Neighbour* self, int neighbourTo, int edgeName){
   // TODO: Implement function
+  if(edgeExist(self,edgeName)){
+    printf("Edge already exist");
+    return 2;
+  }
   return 0;
 }
 
@@ -65,6 +74,7 @@ int deleteNode(Neighbour* self, int neighbour){
       node = node->nextNeighbour;
     }
     if (node->nextNeighbour != NULL) {
+      //TODO Remove edge ??
       Neighbour *tmp = malloc(sizeof(Neighbour));
       tmp->nextNeighbour = node->nextNeighbour->nextNeighbour;
       free(node->nextNeighbour);
