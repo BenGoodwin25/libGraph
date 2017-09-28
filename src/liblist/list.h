@@ -42,4 +42,5 @@ size_t listSize(const Neighbour* self);
 //Recherche
 Neighbour* searchNode(const Neighbour* self, int neighbour);
 
+
 #endif

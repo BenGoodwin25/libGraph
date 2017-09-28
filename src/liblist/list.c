@@ -26,14 +26,14 @@ bool nodeExist(Neighbour *self, int neighbour){
 }
 
 bool edgeExist(Neighbour *self, int edgeName){
-  //TODO
-  /*
-  if() {
-    return true;
-  } else {
-    return false;
+  Neighbour *tmp;
+  tmp=self->nextNeighbour;
+  while(tmp->edgeName != edgeName && tmp->nextNeighbour != NULL ){
+    tmp = tmp->nextNeighbour;
+    if(tmp->edgeName == edgeName){
+      return true;
+    }
   }
-   */
   return false;
 }
 
