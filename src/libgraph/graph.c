@@ -20,7 +20,7 @@ int load_graph(Graph *self, const char *graphFile){
 int add_node(Graph *self, int nodeName){
   if(nodeName < self->nbMaxNodes){
     // TODO: Gestion erreur
-    addNode(&self->adjList[nodeName], -1, 0);
+    //addNode(&self->adjList[nodeName], -1, 0); TODO correct this addNode, dosn't exist anymore ...
   } else {
     // TODO: Retour code erreur nom node pas dans liste (OOB)
   }
@@ -28,16 +28,16 @@ int add_node(Graph *self, int nodeName){
 }
 
 //add an edge
-int add_edge(Graph *self, int fromName, int toName, int edgeName){
+int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight){
   // TODO: mieux gérer les erreures
   // TODO: Faire attention à savoir si l'edge existe déjà ou non
   int error;
 
   if(self->isDirected){
-    error = addEdge(&self->adjList[fromName], toName, edgeName);
+    error = addEdge(&self->adjList[fromName], toName, edgeName, Weight);
   } else {
-    error = addEdge(&self->adjList[fromName], toName, edgeName);
-    error = addEdge(&self->adjList[toName], fromName, edgeName);
+    error = addEdge(&self->adjList[fromName], toName, edgeName, Weight);
+    error = addEdge(&self->adjList[toName], fromName, edgeName, Weight);
   }
   return error;
 }

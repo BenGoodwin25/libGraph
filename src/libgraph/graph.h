@@ -24,7 +24,7 @@ int load_graph(Graph *self, const char *graphFile);
 int add_node(Graph *self, int nodeName);
 
 //add an edge
-int add_edge(Graph *self, int fromName, int toName, int edgeName);
+int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight);
 
 // Check if an edge already exists (true if exists)
 bool is_edge_exists(int edgeName);
