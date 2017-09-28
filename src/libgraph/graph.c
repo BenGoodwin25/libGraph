@@ -35,16 +35,16 @@ int add_node(Graph *self, int nodeName){
 }
 
 //add an edge
-int add_edge(Graph *self, int fromName, int toName, int edgeName){
+int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight){
   // TODO: mieux gérer les erreures
   // TODO: Faire attention à savoir si l'edge existe déjà ou non
   int error;
 
   if(self->isDirected){
-    error = addEdge(self->adjList[fromName], toName, edgeName);
+    error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
   } else {
-    error = addEdge(self->adjList[fromName], toName, edgeName);
-    error = addEdge(self->adjList[toName], fromName, edgeName);
+    error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
+    error = addEdge(self->adjList[toName], fromName, edgeName, Weight);
   }
   return error;
 }

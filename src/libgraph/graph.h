@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "../liblist/list.h"
+#include <list.h>
 
 typedef struct _graph{
   bool isDirected;
@@ -24,7 +24,7 @@ int load_graph(Graph *self, const char *graphFile);
 int add_node(Graph *self, int nodeName);
 
 //add an edge
-int add_edge(Graph *self, int fromName, int toName, int edgeName);
+int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight);
 
 // Check if a node already exists (true if exists)
 bool is_node_exists(Graph* self, int nodeName);
