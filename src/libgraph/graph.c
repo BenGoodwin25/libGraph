@@ -1,10 +1,14 @@
 #include "graph.h"
 
 //create a graph with the right number of nodes
+// error 1 : unexpected allocation error
 int create_graph(Graph *self, size_t maxNodes, bool isDirected){
   self->nbMaxNodes = maxNodes;
   self->isDirected = isDirected;
   self->adjList = malloc(maxNodes*sizeof(Neighbour*));
+  if(self->adjList == NULL){
+    return 1;
+  }
   for(int i=0; i < maxNodes; i++){
     self->adjList[i] = NULL;
   }
@@ -20,34 +24,48 @@ int load_graph(Graph *self, const char *graphFile){
 }
 
 //add a node
+// error 1 : node OOB
+// error 2 : unexpected allocation error
 int add_node(Graph *self, int nodeName){
   if(nodeName < self->nbMaxNodes){
-    // TODO: Gestion erreur
     self->adjList[nodeName] = malloc(sizeof(Neighbour*));
+    if(self->adjList[nodeName] == NULL){
+      return 2;
+    }
     self->adjList[nodeName]->neighbour = -1;
     self->adjList[nodeName]->edgeName = -1;
     self->adjList[nodeName]->weight = -1;
     self->adjList[nodeName]->nextNeighbour = NULL;
   } else {
-    // TODO: Retour code erreur nom node pas dans liste (OOB)
-    printf("Node OOB\n");
+    return 1;
   }
   return 0;
 }
 
 //add an edge
-int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight){
-  // TODO: mieux gérer les erreures
-  // TODO: Faire attention à savoir si l'edge existe déjà ou non
-  int error;
-
-  if(self->isDirected){
-    error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
-  } else {
-    error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
-    error = addEdge(self->adjList[toName], fromName, edgeName, Weight);
+// error 8 : From node doesn't exists
+// error 9 : To node doesn't exists
+// error 10 : Edge already exists
+int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bool isSymmetric){
+  if(!is_node_exists(self, fromName)){
+    return 8;
   }
-  return error;
+  if(!is_node_exists(self, toName)){
+    return 9;
+  }
+  if(is_edge_exists(self, edgeName)){
+    return 10;
+  }
+  if(self->isDirected && !isSymmetric){
+    return addEdge(self->adjList[fromName], toName, edgeName, Weight);
+  } else {
+    int error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
+    if(error != 0){
+      return error;
+    }
+    return addEdge(self->adjList[toName], fromName, edgeName, Weight);
+  }
+  return 0;
 }
 
 // Check if a node already exists
