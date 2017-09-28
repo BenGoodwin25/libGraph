@@ -26,6 +26,7 @@ void add_node(Graph *self, int nodeName){
 //add an edge
 void add_edge(Graph *self, int fromName, int toName, int edgeName){
   // TODO: mieux gérer les erreures
+  // TODO: Faire attention à savoir si l'edge existe déjà ou non
   int error;
   if(self->isDirected){
     error  = addEdge(&self->adjList[fromName], toName, edgeName);
@@ -36,14 +37,23 @@ void add_edge(Graph *self, int fromName, int toName, int edgeName){
   printf("add_edge error statu : %d", error);
 }
 
+// Check id an edge already exists
+bool is_edge_exists(int edgeName){
+  // TODO: implement function for checking existance of an edge
+  return false;
+}
+
 //Delete a node
-void remove_node(Graph *self, Neighbour *selfNode){
+void remove_node(Graph *self, int nodeName){
   // TODO: Supprimer une node
+  // Supression des edge reliées à la node
+  // Supression de la node en elle même
 }
 
 //Delete an edge
-void remove_edge(Graph *self, Neighbour *selfEdge){
+void remove_edge(Graph *self, int edgeName){
   // TODO: Supprimer une edge
+  // Supprime l'edge
 }
 
 //Display a graph

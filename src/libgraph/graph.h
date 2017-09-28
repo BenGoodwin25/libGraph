@@ -25,11 +25,14 @@ void add_node(Graph *self, int nodeName);
 //add an edge
 void add_edge(Graph *self, int fromName, int toName, int edgeName);
 
+// Check if an edge already exists (true if exists)
+bool is_edge_exists(int edgeName);
+
 //Delete a node
-void remove_node(Graph *self, Neighbour *selfNode);
+void remove_node(Graph *self, int nodeName);
 
 //Delete an edge
-void remove_edge(Graph *self, Neighbour *selfEdge);
+void remove_edge(Graph *self, int edgeName);
 
 //Display a graph
 void view_graph(Graph *self);
