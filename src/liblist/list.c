@@ -23,6 +23,9 @@ bool edgeExist(Neighbour *self, int edgeName){
   return false;
 }
 
+//add a node
+// error 1 : Edge already exist
+// error 2 : unexpected allocation error
 int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
   if(edgeExist(self, edgeName)){
     printf("Edge already exist\n");
@@ -31,7 +34,7 @@ int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
   Neighbour *other = malloc(sizeof(Neighbour));
   if(other == NULL){
     printf("Error with memory allocation\n");
-    return 1;
+    return 2;
   }
   other->neighbour = neighbourTo;
   other->weight = Weight;
@@ -54,6 +57,8 @@ int deleteEdge(Neighbour* self, int edgeName){
   return 0;
 }
 
+//add a node
+// error 1 : Edge doesn't exist
 int delFirstEdge(Neighbour* self){
   if(!isEmptyList(self)){
     Neighbour *tmp = malloc(sizeof(Neighbour));

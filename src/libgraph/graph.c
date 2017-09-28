@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "../liblist/list.h"
 
 //create a graph with the right number of nodes
 // error 1 : unexpected allocation error
@@ -65,7 +66,6 @@ int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bo
     }
     return addEdge(self->adjList[toName], fromName, edgeName, Weight);
   }
-  return 0;
 }
 
 bool is_node_oob(Graph *self, int nodeName){
@@ -128,6 +128,7 @@ int view_graph(Graph *self){
   printf("# maximum number of node\n");
   printf("%zu\n", self->nbMaxNodes);
   printf("# directed\n");
+  Graph *tmp = self;
   if(self->isDirected){
     printf("y\n");
   } else {
@@ -136,8 +137,18 @@ int view_graph(Graph *self){
   printf("# node: neighbours\n");
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
-      printf("%d: ", i+1);
+      //Pourquoi tu avais mis i+1 ???
+      printf("%d: ", i);
       // call list dump
+      if(self->adjList[i] != NULL) {
+        while(tmp->adjList[i] != NULL){
+          if(tmp->adjList[i]->neighbour != -1){
+            // une virgule qui traine à la fin ... fuck
+            printf("(%d/%d), ",tmp->adjList[i]->neighbour,tmp->adjList[i]->edgeName);
+          }
+          tmp->adjList[i]=tmp->adjList[i]->nextNeighbour;
+        }
+      }
       printf("\n");
     }
   }
