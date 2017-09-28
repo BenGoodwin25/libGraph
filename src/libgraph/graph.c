@@ -126,7 +126,7 @@ int remove_edge(Graph *self, int edgeName){
 int view_graph(Graph *self){
   // TODO: Dump graph into console
   printf("# maximum number of node\n");
-  printf("%d\n", self->nbMaxNodes);
+  printf("%zu\n", self->nbMaxNodes);
   printf("# directed\n");
   if(self->isDirected){
     printf("y\n");
