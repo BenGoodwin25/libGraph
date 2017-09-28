@@ -14,7 +14,7 @@ typedef struct _graph{
 } Graph;
 
 //create a graph with the right number of nodes
-int create_graph(Graph *self, size_t maxNodes);
+int create_graph(Graph *self, size_t maxNodes, bool isDirected);
 
 //load a graph from a file
 int load_graph(Graph *self, const char *graphFile);

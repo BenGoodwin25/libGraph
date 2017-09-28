@@ -1,8 +1,9 @@
 #include "graph.h"
 
 //create a graph with the right number of nodes
-int create_graph(Graph *self, size_t maxNodes){
+int create_graph(Graph *self, size_t maxNodes, bool isDirected){
   self->nbMaxNodes = maxNodes;
+  self->isDirected = isDirected;
   self->adjList = malloc(maxNodes*sizeof(Neighbour*));
   for(int i=0; i < maxNodes; i++){
     self->adjList[i] = NULL;
@@ -56,7 +57,13 @@ bool is_node_exists(Graph* self, int nodeName){
 
 // Check if an edge already exists
 bool is_edge_exists(Graph* self, int edgeName){
-  // TODO: implement function for checking existance of an edge
+  for(int i = 0; i < self->nbMaxNodes; i++){
+    if(is_node_exists(self, i)){
+      if(edgeExist(self->adjList[i], edgeName)){
+        return true;
+      }
+    }
+  }
   return false;
 }
 
