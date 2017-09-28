@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     printf("Node 5 doesn't exists\n");
   }
   add_node(&graph, 3);
-  if(is_node_exists(&graph, 5)){
+  if(is_node_exists(&graph, 3)){
     printf("Node 3 exists\n");
   } else {
     printf("Node 3 doesn't exists\n");

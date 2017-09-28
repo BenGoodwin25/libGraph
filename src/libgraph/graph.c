@@ -22,9 +22,14 @@ int load_graph(Graph *self, const char *graphFile){
 int add_node(Graph *self, int nodeName){
   if(nodeName < self->nbMaxNodes){
     // TODO: Gestion erreur
-    addNode(self->adjList[nodeName], -1, 0);
+    self->adjList[nodeName] = malloc(sizeof(Neighbour*));
+    self->adjList[nodeName]->neighbour = -1;
+    self->adjList[nodeName]->edgeName = -1;
+    self->adjList[nodeName]->weight = -1;
+    self->adjList[nodeName]->nextNeighbour = NULL;
   } else {
     // TODO: Retour code erreur nom node pas dans liste (OOB)
+    printf("Node OOB\n");
   }
   return 0;
 }
