@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     quit = readUserInput();
   }
 */
-  printf("Press Any Key to Continue\n");
-  getchar();
+  //printf("Press Any Key to Continue\n");
+  //getchar();
   return 0;
 }
