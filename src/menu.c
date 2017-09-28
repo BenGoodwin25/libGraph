@@ -4,7 +4,7 @@ void printHeader(){
   //---------MENU--------------//
   printf("##################################################################\n");
   printf("#                                                                #\n");
-  printf("#                      graph-manager(%s)                         #\n",VERSION);
+  printf("#                      graph-manager(%s)                      #\n",VERSION);
   printf("#                                                                #\n");
   printf("##################################################################\n");
 }
