@@ -40,7 +40,15 @@ int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
 }
 
 int deleteEdge(Neighbour* self, int edgeName){
-  //TODO
+  //TODO implement
+  Neighbour *tmp;
+  tmp=self->nextNeighbour;
+  while(tmp->edgeName != edgeName && tmp->nextNeighbour != NULL ){
+    tmp = tmp->nextNeighbour;
+    if(tmp->edgeName == edgeName){
+      //TODO remove edge
+    }
+  }
   return 0;
 }
 
