@@ -15,10 +15,13 @@ int main(int argc, char* argv[]) {
   } else {
     printf("Node 3 doesn't exists\n");
   }
+  add_node(&graph, 4);
+  /*
   printHeader();
   while(quit == 0) {
     printMainMenu();
     quit = readUserInput();
   }
+  */
   return 0;
 }
