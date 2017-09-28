@@ -3,7 +3,7 @@ COMPILER=gcc
 #Archiver for static lib
 ARCHIVER=ar
 #Possible Arguments
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -std=c11
 #Here insert the library you could need
 LFLAGS=
 

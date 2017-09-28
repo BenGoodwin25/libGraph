@@ -16,12 +16,32 @@ int destroyList(Neighbour *self){
   return 0;
 }
 
-int addNode(Neighbour* self, int neighbour){
+bool nodeExist(Neighbour *self, int neighbour){
+  if(searchNode(self,neighbour)!=NULL) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool edgeExist(Neighbour *self, int edgeName){
+  //TODO
+  /*
+  if() {
+    return true;
+  } else {
+    return false;
+  }
+   */
+}
+
+int addNode(Neighbour* self, int neighbour, int Weight){
   Neighbour *other = malloc(sizeof(Neighbour));
   if(other == NULL){
     return 1;
   }
   other->neighbour = neighbour;
+  other->weight=Weight;
   other->nextNeighbour = self->nextNeighbour;
   self->nextNeighbour = other;
   return 0;
@@ -55,6 +75,11 @@ int deleteNode(Neighbour* self, int neighbour){
     }
     return 1;
   }
+}
+
+int deleteEdge(Neighbour* self, int edgeName){
+  //TODO
+  return 0;
 }
 
 int delFirstNode(Neighbour* self){
