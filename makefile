@@ -31,15 +31,15 @@ LIBLISTSRC=$(wildcard $(LISTSRCDIR)/*.c)
 LIBLISTOBJ=$(LIBLISTSRC:$(LISTSRCDIR)/%.c=$(OBJDIR)/liblist/%.o)
 
 #Compile all targets
-all: $(LIBDIR) $(OBJDIR) $(BINDIR) $(LIBGRAPH) $(LIBLIST) $(EXEC)
+all: $(LIBDIR) $(OBJDIR) $(BINDIR) $(EXEC)
 
 #Compile the main exec
-$(EXEC): $(EXECOBJ)
-	$(COMPILER) -static -o $@ $^ $(CFLAGS) $(LFLAGS) -L$(LIBDIR) -lgraph -llist
+$(EXEC): $(EXECOBJ) $(LIBGRAPH) $(LIBLIST)
+	$(COMPILER) -static -o $@ $(EXECOBJ) $(CFLAGS) $(LFLAGS) -L$(LIBDIR) -lgraph -llist
 
 #Creating static graph lib
-$(LIBGRAPH) : $(LIBGRAPHOBJ)
-	$(ARCHIVER) rcs $@ $^
+$(LIBGRAPH) : $(LIBGRAPHOBJ) $(LIBLIST)
+	$(ARCHIVER) rcs $@ $(LIBGRAPHOBJ)
 
 #Creating static list lib
 $(LIBLIST) : $(LIBLISTOBJ)

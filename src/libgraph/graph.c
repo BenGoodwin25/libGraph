@@ -16,6 +16,7 @@ void load_graph(Graph *self, const char *graphFile){
 //add a node
 void add_node(Graph *self, int neighbour){
   if(neighbour < self->nbMaxNodes){
+    addNode(&self->adjList[neighbour], neighbour);
     // TODO: Créer un neighbour
   } else {
     // TODO: Retour code erreur
@@ -23,8 +24,12 @@ void add_node(Graph *self, int neighbour){
 }
 
 //add an edge
-void add_edge(Graph *self, Neighbour *selfEdge){
-
+void add_edge(Graph *self, int fromName, int toName, int edgeName){
+  if(self->isDirected){
+    // Support directed
+  } else {
+    // Support undirected
+  }
 }
 
 //Delete a node

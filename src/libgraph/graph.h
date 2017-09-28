@@ -23,7 +23,7 @@ void load_graph(Graph *self, const char *graphFile);
 void add_node(Graph *self, int neighbour);
 
 //add an edge
-void add_edge(Graph *self, Neighbour *selfEdge);
+void add_edge(Graph *self, int fromName, int toName, int edgeName);
 
 //Delete a node
 void remove_node(Graph *self, Neighbour *selfNode);
