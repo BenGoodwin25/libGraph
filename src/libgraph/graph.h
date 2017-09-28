@@ -20,7 +20,7 @@ void create_graph(Graph *self, size_t maxNodes);
 void load_graph(Graph *self, const char *graphFile);
 
 //add a node
-void add_node(Graph *self, int neighbour);
+void add_node(Graph *self, int nodeName);
 
 //add an edge
 void add_edge(Graph *self, int fromName, int toName, int edgeName);
@@ -35,7 +35,7 @@ void remove_edge(Graph *self, Neighbour *selfEdge);
 void view_graph(Graph *self);
 
 //Save the graph into a file
-void save_graph(Graph *self, FILE *datatext);
+void save_graph(Graph *self, char *fileName);
 
 //Free graph and quit
 void quit(Graph *self);

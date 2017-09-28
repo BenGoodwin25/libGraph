@@ -9,22 +9,23 @@ void create_graph(Graph *self, size_t maxNodes){
 //load a graph from a file
 void load_graph(Graph *self, const char *graphFile){
   FILE* file = fopen(graphFile, "r");
-  // BORDEL AVEC LE FICHIER
+  // TODO: READ FILE AND STORE IT in MEMORY
   fclose(file);
 }
 
 //add a node
-void add_node(Graph *self, int neighbour){
-  if(neighbour < self->nbMaxNodes){
-    addNode(&self->adjList[neighbour], neighbour);
-    // TODO: Créer un neighbour
+void add_node(Graph *self, int nodeName){
+  if(nodeName < self->nbMaxNodes){
+    // TODO: Gestion erreur
+    addNode(&self->adjList[nodeName], -1);
   } else {
-    // TODO: Retour code erreur
+    // TODO: Retour code erreur nom node pas dans liste (OOB)
   }
 }
 
 //add an edge
 void add_edge(Graph *self, int fromName, int toName, int edgeName){
+  // TODO: mieux gérer les erreures
   int error;
   if(self->isDirected){
     error  = addEdge(&self->adjList[fromName], toName, edgeName);
@@ -32,29 +33,30 @@ void add_edge(Graph *self, int fromName, int toName, int edgeName){
     error = addEdge(&self->adjList[fromName], toName, edgeName);
     error = addEdge(&self->adjList[toName], fromName, edgeName);
   }
+  printf("add_edge error statu : %d", error);
 }
 
 //Delete a node
 void remove_node(Graph *self, Neighbour *selfNode){
-
+  // TODO: Supprimer une node
 }
 
 //Delete an edge
 void remove_edge(Graph *self, Neighbour *selfEdge){
-
+  // TODO: Supprimer une edge
 }
 
 //Display a graph
 void view_graph(Graph *self){
-
+  // TODO: Dump graph into console
 }
 
 //Save the graph into a file
-void save_graph(Graph *self, FILE *datatext){
-
+void save_graph(Graph *self, char *fileName){
+  // TODO: Save the graph in a file
 }
 
 //Free graph and quit
 void quit(Graph *self){
-
+  // TODO: Destroy nodes and graph with free
 }
