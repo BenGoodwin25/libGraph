@@ -33,6 +33,7 @@ bool edgeExist(Neighbour *self, int edgeName){
     return false;
   }
    */
+  return true;
 }
 
 int addNode(Neighbour* self, int neighbour, int Weight){
