@@ -27,6 +27,11 @@ int addNode(Neighbour* self, int neighbour){
   return 0;
 }
 
+int addEdge(Neighbour* self, int neighbourTo, int edgeName){
+  // TODO: Implement function
+  return 0;
+}
+
 int deleteNode(Neighbour* self, int neighbour){
   Neighbour* node;
   node = self->nextNeighbour;

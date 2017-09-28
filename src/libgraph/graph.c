@@ -25,10 +25,12 @@ void add_node(Graph *self, int neighbour){
 
 //add an edge
 void add_edge(Graph *self, int fromName, int toName, int edgeName){
+  int error;
   if(self->isDirected){
-    // Support directed
+    error  = addEdge(&self->adjList[fromName], toName, edgeName);
   } else {
-    // Support undirected
+    error = addEdge(&self->adjList[fromName], toName, edgeName);
+    error = addEdge(&self->adjList[toName], fromName, edgeName);
   }
 }
 

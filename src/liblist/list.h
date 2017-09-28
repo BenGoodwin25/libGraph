@@ -3,7 +3,8 @@
 
 
 typedef struct _neighbour {
-	int neighbour;
+  int neighbour;
+  int edgeName;
 	int weight;
 	struct _neighbour *nextNeighbour;
 } Neighbour;
@@ -16,6 +17,9 @@ int destroyList(Neighbour* self);
 
 //ajout
 int addNode(Neighbour* self, int neighbour);
+
+//créé une 'edge'
+int addEdge(Neighbour* self, int neighbourTo, int edgeName);
 
 //suppression du node ayant la donnée neighbour
 int deleteNode(Neighbour* self, int neighbour);
