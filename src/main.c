@@ -1,12 +1,17 @@
 #include "menu.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 int main(int argc, char* argv[]) {
   //int quit = 0;
   Graph graph;
   create_graph(&graph, 10, false);
   add_node(&graph, 3);
   add_node(&graph, 5);
-  add_edge(&graph, 3, 5, 1, 0);
+  //add_edge(&graph, 3, 5, 1, 0, false);
+  view_graph(&graph);
+  /*
   if(is_edge_exists(&graph, 1)){
     printf("Edge 1 exists\n");
   } else {
@@ -19,5 +24,7 @@ int main(int argc, char* argv[]) {
     quit = readUserInput();
   }
 */
+  printf("Press Any Key to Continue\n");
+  getchar();
   return 0;
 }

@@ -116,13 +116,31 @@ int remove_node(Graph *self, int nodeName){
 int remove_edge(Graph *self, int edgeName){
   // TODO: Supprimer une edge
   // Supprime l'edge
-
+  for(int i = 0; i < self->nbMaxNodes; i++){
+    deleteEdge(self->adjList[i], edgeName);
+  }
   return 0;
 }
 
 //Display a graph
 int view_graph(Graph *self){
   // TODO: Dump graph into console
+  printf("# maximum number of node\n");
+  printf("%d\n", self->nbMaxNodes);
+  printf("# directed\n");
+  if(self->isDirected){
+    printf("y\n");
+  } else {
+    printf("n\n");
+  }
+  printf("# node: neighbours\n");
+  for(int i = 0; i < self->nbMaxNodes; i++){
+    if(is_node_exists(self, i)){
+      printf("%d: ", i+1);
+      // call list dump
+      printf("\n");
+    }
+  }
 
   return 0;
 }

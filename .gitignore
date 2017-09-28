@@ -64,3 +64,8 @@ cmake-build-debug
 
 #VSCode
 .vscode/
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
