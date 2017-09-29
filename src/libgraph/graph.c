@@ -122,47 +122,38 @@ int remove_edge(Graph *self, int edgeName){
   return 0;
 }
 
-//Display a graph
-int view_graph(Graph *self){
-  // TODO: Dump graph into console
-  printf("# maximum number of node\n");
-  printf("%zu\n", self->nbMaxNodes);
-  printf("# directed\n");
-  Graph *tmp = self;
+int output_graph_to_stream(Graph *self, FILE *stream){
+  fputs("# maximum number of node\n", stream);
+  fprintf(stream, "%zu\n", self->nbMaxNodes);
+  fputs("# directed\n", stream);
   if(self->isDirected){
-    printf("y\n");
+    fputs("y\n", stream);
   } else {
-    printf("n\n");
+    fputs("n\n", stream);
   }
-  printf("# node: neighbours\n");
+  fputs("# node: neighbours\n", stream);
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
-      //Pourquoi tu avais mis i+1 ???
-      printf("%d: ", i);
-      // call list dump
-      if(self->adjList[i] != NULL) {
-        while(tmp->adjList[i] != NULL){
-          if(tmp->adjList[i]->neighbour != -1){
-            // une virgule qui traine à la fin ... fuck
-            printf("(%d/%d), ",tmp->adjList[i]->neighbour,tmp->adjList[i]->edgeName);
-          }
-          tmp->adjList[i]=tmp->adjList[i]->nextNeighbour;
-        }
-      }
-      printf("\n");
+      fprintf(stream, "%d: ", i+1);
+      // call list output
+      fputs("\n", stream);
     }
   }
-
   return 0;
+}
+
+//Display a graph
+int view_graph(Graph *self){
+  return output_graph_to_stream(self, stdout);
 }
 
 //Save the graph into a file
 int save_graph(Graph *self, const char *graphFile){
-  FILE* file = fopen(graphFile, "w");
-  // BORDEL AVEC LE FICHIER
+  FILE *file = fopen(graphFile, "w");
+  int error = output_graph_to_stream(self, file);
   fclose(file);
 
-  return 0;
+  return error;
 }
 
 //Free graph and quit

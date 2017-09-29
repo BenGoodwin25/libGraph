@@ -44,6 +44,9 @@ int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
   return 0;
 }
 
+int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
+}
+
 int deleteEdge(Neighbour* self, int edgeName){
   //TODO implement
   Neighbour *tmp;
@@ -102,4 +105,7 @@ size_t listSize(const Neighbour* self){
     }
     return size;
   }
+}
+
+int outputList(Neighbour *self, FILE *stream){
 }
