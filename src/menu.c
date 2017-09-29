@@ -33,6 +33,11 @@ int readUserInput(){
   return 0;
 }
 
+void flushReadBuffer() {
+  char c;
+  while ((c = getchar()) != '\n' && c != EOF) { }
+}
+
 /*
 int main(){
   

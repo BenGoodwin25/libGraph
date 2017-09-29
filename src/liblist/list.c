@@ -45,6 +45,7 @@ int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
 }
 
 int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
+  return 0;
 }
 
 int deleteEdge(Neighbour* self, int edgeName){
@@ -108,4 +109,13 @@ size_t listSize(const Neighbour* self){
 }
 
 int outputList(Neighbour *self, FILE *stream){
+  Neighbour *tmp = self;
+  while(tmp != NULL){
+    if(tmp->neighbour != -1){
+      // une virgule qui traine à la fin ... fuck
+      fprintf(stream, "(%d/%d), ",tmp->neighbour+1,tmp->edgeName);
+    }
+    tmp=tmp->nextNeighbour;
+  }
+  return 0;
 }
