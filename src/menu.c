@@ -112,6 +112,7 @@ void askFileLocation(Graph *graph){
     fprintf(stdout, "# Which file should be loaded ?\n");
     error = readUserInput(filePathInput, MAX_PATH_LENGTH+1);
   }
-  load_graph(graph, filePathInput);
-  fprintf(stdout, "# Graph loaded\n");
+  if(load_graph(graph, filePathInput) == 0){
+    fprintf(stdout, "# Graph successfully loaded\n");
+  }
 }
