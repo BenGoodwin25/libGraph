@@ -36,6 +36,7 @@ int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
     printf("Error with memory allocation\n");
     return 2;
   }
+  //TODO go to the end
   other->neighbour = neighbourTo;
   other->weight = Weight;
   other->edgeName = edgeName;
@@ -130,7 +131,7 @@ int outputList(Neighbour *self, FILE *stream){
     Neighbour *tmp=self;
     while(tmp != NULL){
       if(tmp->neighbour != -1){
-        fprintf(stream,"(%d/%d)", tmp->edgeName+1, tmp->neighbour+1);
+        fprintf(stream,"(%d/%d)", tmp->neighbour+1, tmp->edgeName);
         //Yes all that for a ", " ...
         if(tmp->nextNeighbour != NULL && tmp->nextNeighbour->neighbour != -1){
           fprintf(stream,", ");
