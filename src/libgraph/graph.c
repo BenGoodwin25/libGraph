@@ -1,5 +1,4 @@
 #include "graph.h"
-#include "../liblist/list.h"
 
 //create a graph with the right number of nodes
 // error 1 : unexpected allocation error
@@ -103,7 +102,7 @@ int remove_node(Graph *self, int nodeName){
   // Supression des edge reliées à la node
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
-      //search and delete node from endpoint
+      deleteEdgeFromNodeName(self->adjList[i],i);
     }
   }
   // Supression de la node en elle même
@@ -114,8 +113,6 @@ int remove_node(Graph *self, int nodeName){
 
 //Delete an edge
 int remove_edge(Graph *self, int edgeName){
-  // TODO: Supprimer une edge
-  // Supprime l'edge
   for(int i = 0; i < self->nbMaxNodes; i++){
     deleteEdge(self->adjList[i], edgeName);
   }
@@ -135,7 +132,7 @@ int output_graph_to_stream(Graph *self, FILE *stream){
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
       fprintf(stream, "%d: ", i+1);
-      // call list output
+      outputList(self->adjList[i], stream);
       fputs("\n", stream);
     }
   }

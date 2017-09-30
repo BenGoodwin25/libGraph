@@ -44,20 +44,38 @@ int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight){
   return 0;
 }
 
+//
+// Error $deleteEdge()$ : code of deleteEdge
 int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
-}
-
-int deleteEdge(Neighbour* self, int edgeName){
-  //TODO implement
   Neighbour *tmp;
   tmp=self->nextNeighbour;
-  while(tmp->edgeName != edgeName && tmp->nextNeighbour != NULL ){
-    tmp = tmp->nextNeighbour;
-    if(tmp->edgeName == edgeName){
-      //TODO remove edge
-    }
+  int error;
+  while(tmp->neighbour != nodeName && tmp->nextNeighbour != NULL ){
+    error=deleteEdge(self,tmp->edgeName);
   }
-  return 0;
+  return error;
+}
+
+//
+// error 1 : Edge doesn't exist
+int deleteEdge(Neighbour* self, int edgeName){
+  if(self != NULL) {
+    Neighbour *tmp = malloc(sizeof(Neighbour));
+    while (self->nextNeighbour != NULL) {
+      if (self->nextNeighbour->edgeName == edgeName) {
+        tmp->nextNeighbour = self->nextNeighbour->nextNeighbour;
+        free(self->nextNeighbour);
+        self->nextNeighbour = NULL;
+        self->nextNeighbour = tmp->nextNeighbour;
+        tmp->nextNeighbour = NULL;
+        free(tmp);
+        return 0;
+      }
+      tmp = tmp->nextNeighbour;
+    }
+    free(tmp);
+  }
+  return 1;
 }
 
 //add a node
@@ -108,4 +126,19 @@ size_t listSize(const Neighbour* self){
 }
 
 int outputList(Neighbour *self, FILE *stream){
+  if(self != NULL) {
+    Neighbour *tmp=self;
+    while(tmp != NULL){
+      if(tmp->neighbour != -1){
+        fprintf(stream,"(%d/%d)", tmp->edgeName+1, tmp->neighbour+1);
+        //Yes all that for a ", " ...
+        if(tmp->nextNeighbour != NULL && tmp->nextNeighbour->neighbour != -1){
+          fprintf(stream,", ");
+        }
+      }
+      tmp=tmp->nextNeighbour;
+
+    }
+  }
+  return 0;
 }

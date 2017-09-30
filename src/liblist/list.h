@@ -36,7 +36,7 @@ bool isEmptyList(const Neighbour* self);
 size_t listSize(const Neighbour* self);
 
 // TODO: Ben add
-// écrit toutte la liste dans le stream (pas de retour à la ligne)
+// écrit toute la liste dans le stream (pas de retour à la ligne)
 int outputList(Neighbour *self, FILE *stream);
 
 #endif
