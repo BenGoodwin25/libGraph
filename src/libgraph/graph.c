@@ -1,5 +1,7 @@
 #include "graph.h"
 
+// TODO: Log errors etc...
+
 bool is_node_oob(Graph *self, int nodeName){
   return self->nbMaxNodes < nodeName;
 }
@@ -31,6 +33,10 @@ int load_graph(Graph *self, const char *graphFile){
   char *edges[BUFFER_SIZE];
   char cIsDirected;
   FILE* file = fopen(graphFile, "r");
+  if(!file){
+    printf("[Error] Can't open file %s, file doesn't exists or can't be opened!\n", graphFile);
+    return 1;
+  }
 
   // Skip the first commented line
   fgets(buffer, BUFFER_SIZE, file);

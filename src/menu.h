@@ -5,6 +5,8 @@
 
 #define VERSION "0.0.1"
 
+#define MAX_PATH_LENGTH 256
+
 // Main menu
 void printHeader();
 void printMainMenu();
@@ -17,5 +19,6 @@ void flushReadBuffer();
 
 // read user inputs for creating a graph
 void readCreateGraph(Graph *graph);
+void askFileLocation(Graph *graph);
 
 #endif

@@ -37,9 +37,9 @@ void startMenu(Graph *graph){
 }
 
 int readInputMainMenu(Graph *graph){
-  char inputString[4];
+  char inputString[3];
   int choice = -1;
-  readUserInput(inputString, 4);
+  readUserInput(inputString, 3);
   if(sscanf(inputString, "%d", &choice) == 1){
     switch(choice){
       case 0:
@@ -51,6 +51,7 @@ int readInputMainMenu(Graph *graph){
         break;
       case 2:
         // Load a graph from file
+        askFileLocation(graph);
         break;
       case 3:
         // Display the current graph
@@ -89,6 +90,9 @@ int readUserInput(char *dest, int length){
       *backspacePos = '\0';
     } else {
       flushReadBuffer();
+      dest[0] = '\0';
+      fprintf(stdout, "# Overflow, entry must be less than %d character long.\n", length-1);
+      return 2;
     }
     return 0;
   } else {
@@ -99,4 +103,15 @@ int readUserInput(char *dest, int length){
 
 void readCreateGraph(Graph *graph){
   // TODO
+}
+
+void askFileLocation(Graph *graph){
+  char filePathInput[MAX_PATH_LENGTH];
+  int error = -1;
+  while(error != 0){
+    fprintf(stdout, "# Which file should be loaded ?\n");
+    error = readUserInput(filePathInput, MAX_PATH_LENGTH+1);
+  }
+  load_graph(graph, filePathInput);
+  fprintf(stdout, "# Graph loaded\n");
 }
