@@ -278,7 +278,7 @@ int save_graph(Graph *self, const char *graphFile){
 
 //Free graph and quit
 int delete_graph(Graph *self){
-  if(self != NULL){
+  if(self != NULL && self->nbMaxNodes > 0){
     if(self->adjList != NULL){
       for (size_t i = 0; i < self->nbMaxNodes; i++){
         if(is_node_exists(self, i)){
