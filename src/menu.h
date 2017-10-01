@@ -20,5 +20,7 @@ void flushReadBuffer();
 // read user inputs for creating a graph
 void readCreateGraph(Graph *graph);
 void askFileLocation(Graph *graph);
+void askSaveLocation(Graph *graph);
+void createExampleGraph(Graph *graph);
 
 #endif

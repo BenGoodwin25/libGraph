@@ -229,12 +229,12 @@ int output_graph_to_stream(Graph *self, FILE *stream){
   } else {
     fputs("n\n", stream);
   }
-  fputs("# node: neighbours\n", stream);
+  fputs("# node: neighbours", stream);
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
+      fputs("\n", stream);
       fprintf(stream, "%d: ", i+1);
       outputList(self->adjList[i], stream);
-      fputs("\n", stream);
     }
   }
   return 0;
@@ -242,6 +242,10 @@ int output_graph_to_stream(Graph *self, FILE *stream){
 
 //Display a graph
 int view_graph(Graph *self){
+  if(self->nbMaxNodes <= 0){
+    printf("[Error] Graph have to be initialized!\n");
+    return 1;
+  }
   return output_graph_to_stream(self, stdout);
 }
 
@@ -264,6 +268,8 @@ int quit(Graph *self){
         }
       }
       free(self->adjList);
+      self->isDirected = false;
+      self->nbMaxNodes = 0;
     }
   }
   return 0;

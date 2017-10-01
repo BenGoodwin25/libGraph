@@ -15,7 +15,7 @@ void printHeader(){
 }
 
 void printMainMenu(){
-  printf("#\n");
+  printf("\n");
   printf("#  0 : Create Example Graph\n");
   printf("#  1 : Create Graph\n");
   printf("#  2 : Load Graph from file\n");
@@ -24,7 +24,7 @@ void printMainMenu(){
   printf("#  5 : Save Graph to file\n");
   printf("#  6 : Delete Graph\n");
   printf("#  7 : Quit (and delete Graph)\n");
-  printf("#\n");
+  printf("\n");
 }
 
 void startMenu(Graph *graph){
@@ -39,11 +39,14 @@ void startMenu(Graph *graph){
 int readInputMainMenu(Graph *graph){
   char inputString[3];
   int choice = -1;
+  printf("Choice : ");
   readUserInput(inputString, 3);
+  printf("\n");
   if(sscanf(inputString, "%d", &choice) == 1){
     switch(choice){
       case 0:
         // Create an example graph
+        createExampleGraph(graph);
         break;
       case 1:
         // Ask user infos to create a graph
@@ -55,16 +58,20 @@ int readInputMainMenu(Graph *graph){
         break;
       case 3:
         // Display the current graph
+        printf("# Graph :\n");
         view_graph(graph);
+        printf("\n");
         break;
       case 4:
         // Menu for modifying a graph
         break;
       case 5:
         //Save current Graph to file
+        askSaveLocation(graph);
         break;
       case 6:
         // Deleting the graph
+        quit(graph);
         break;
       case 7:
         // Quit the application
@@ -91,7 +98,7 @@ int readUserInput(char *dest, int length){
     } else {
       flushReadBuffer();
       dest[0] = '\0';
-      fprintf(stdout, "# Overflow, entry must be less than %d character long.\n", length-1);
+      fprintf(stdout, "[Warning] Overflow, entry must be less than %d character long.\n", length-1);
       return 2;
     }
     return 0;
@@ -102,7 +109,31 @@ int readUserInput(char *dest, int length){
 }
 
 void readCreateGraph(Graph *graph){
-  // TODO
+  int maxNodes;
+  char maxNodeInput[11];
+  char directedInput[2];
+  bool isDirected;
+
+  if(graph->nbMaxNodes > 0){
+    quit(graph);
+  }
+
+  printf("# Enter the maximum number of nodes :\n");
+  readUserInput(maxNodeInput, 12);
+  if(sscanf(maxNodeInput, "%d", &maxNodes) == 1){
+    printf("# Is the graph symmetric ? (y/n)\n");
+    readUserInput(directedInput, 3);
+    if(directedInput[0] == 'y'){
+      isDirected = true;
+    } else if(directedInput[0] == 'n') {
+      isDirected = false;
+    } else {
+        printf("[Error] Can't determine by your entry if it's directed or not.\n");
+    }
+    create_graph(graph, maxNodes, isDirected);
+  } else {
+    printf("[Error] Can't convert your entry to a valid number\n");
+  }
 }
 
 void askFileLocation(Graph *graph){
@@ -115,4 +146,35 @@ void askFileLocation(Graph *graph){
   if(load_graph(graph, filePathInput) == 0){
     fprintf(stdout, "# Graph successfully loaded\n");
   }
+}
+
+void askSaveLocation(Graph *graph){
+  char filePathInput[MAX_PATH_LENGTH];
+  int error = -1;
+  while(error != 0){
+    fprintf(stdout, "# Where graph should be saved ?\n");
+    error = readUserInput(filePathInput, MAX_PATH_LENGTH+1);
+  }
+  if(save_graph(graph, filePathInput) == 0){
+    fprintf(stdout, "# Graph successfully saved\n");
+  }
+}
+
+void createExampleGraph(Graph *graph){
+  create_graph(graph, 11, false);
+  add_node(graph, 0);
+  add_node(graph, 1);
+  add_node(graph, 2);
+  add_node(graph, 3);
+  add_node(graph, 4);
+  add_node(graph, 5);
+  add_node(graph, 6);
+  add_node(graph, 7);
+  add_edge(graph, 0, 6, 1, 0, true);
+  add_edge(graph, 0, 2, 2, 0, true);
+  add_edge(graph, 0, 3, 5, 0, true);
+  add_edge(graph, 1, 4, 4, 0, true);
+  add_edge(graph, 1, 6, 8, 0, true);
+  add_edge(graph, 3, 6, 3, 0, true);
+  printf("# Example graph created!\n");
 }
