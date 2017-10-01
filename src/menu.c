@@ -71,11 +71,12 @@ int readInputMainMenu(Graph *graph){
         break;
       case 6:
         // Deleting the graph
-        quit(graph);
+        delete_graph(graph);
+        printf("# Graph deleted!\n");
         break;
       case 7:
         // Quit the application
-        quit(graph);
+        delete_graph(graph);
         return 1;
         break;
       default:
@@ -98,7 +99,7 @@ int readUserInput(char *dest, int length){
     } else {
       flushReadBuffer();
       dest[0] = '\0';
-      fprintf(stdout, "[Warning] Overflow, entry must be less than %d character long.\n", length-1);
+      LOG_WARN("Overflow, entry must be less than %d character long.\n", length-1);
       return 2;
     }
     return 0;
@@ -115,7 +116,7 @@ void readCreateGraph(Graph *graph){
   bool isDirected;
 
   if(graph->nbMaxNodes > 0){
-    quit(graph);
+    delete_graph(graph);
   }
 
   printf("# Enter the maximum number of nodes :\n");
@@ -128,11 +129,11 @@ void readCreateGraph(Graph *graph){
     } else if(directedInput[0] == 'n') {
       isDirected = false;
     } else {
-        printf("[Error] Can't determine by your entry if it's directed or not.\n");
+        LOG_ERROR("Can't determine by your entry if it's directed or not.\n");
     }
     create_graph(graph, maxNodes, isDirected);
   } else {
-    printf("[Error] Can't convert your entry to a valid number\n");
+    LOG_ERROR("Can't convert your entry to a valid number\n");
   }
 }
 

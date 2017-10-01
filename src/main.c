@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
   view_graph(&graph);
   save_graph(&graph, "test.graf");
 
-  quit(&graph);
+  delete_graph(&graph);
   return 0;
 }
 */
