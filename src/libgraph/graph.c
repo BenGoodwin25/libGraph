@@ -136,6 +136,7 @@ int add_node(Graph *self, int nodeName){
     self->adjList[nodeName]->edgeName = -1;
     self->adjList[nodeName]->weight = -1;
     self->adjList[nodeName]->nextNeighbour = NULL;
+
   } else {
     return 1;
   }
@@ -157,13 +158,13 @@ int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bo
     return 10;
   }
   if(self->isDirected && !isSymmetric){
-    return addEdge(self->adjList[fromName], toName, edgeName, Weight);
+    return addEdge(&self->adjList[fromName], toName, edgeName, Weight);
   } else {
-    int error = addEdge(self->adjList[fromName], toName, edgeName, Weight);
+    int error = addEdge(&self->adjList[fromName], toName, edgeName, Weight);
     if(error != 0){
       return error;
     }
-    return addEdge(self->adjList[toName], fromName, edgeName, Weight);
+    return addEdge(&self->adjList[toName], fromName, edgeName, Weight);
   }
 }
 
@@ -237,6 +238,7 @@ int output_graph_to_stream(Graph *self, FILE *stream){
       outputList(self->adjList[i], stream);
     }
   }
+  fputs("\n",stream);
   return 0;
 }
 

@@ -15,9 +15,8 @@ Neighbour createList();
 bool edgeExist(Neighbour *self, int edgeName);
 
 //ajout
-int addEdge(Neighbour* self, int neighbourTo, int edgeName, int Weight);
+int addEdge(Neighbour **self, int neighbour, int edgeName, int Weight);
 
-// TODO: Ben add
 // supression de toutes les edges dans la liste donnée ayant pour endpoint le  point passer en paramètre
 int deleteEdgeFromNodeName(Neighbour* self, int nodeName);
 
@@ -36,7 +35,6 @@ bool isEmptyList(const Neighbour* self);
 //taille
 size_t listSize(const Neighbour* self);
 
-// TODO: Ben add
 // écrit toute la liste dans le stream (pas de retour à la ligne)
 int outputList(Neighbour *self, FILE *stream);
 

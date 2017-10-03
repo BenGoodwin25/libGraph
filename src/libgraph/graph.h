@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <list.h>
+#include "../liblist/list.h"
 
 typedef struct _graph{
   bool isDirected;
