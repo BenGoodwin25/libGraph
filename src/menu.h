@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "libgraph/graph.h"
+#include <graph.h>
 
 #define VERSION "0.0.1"
 

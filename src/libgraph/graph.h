@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../liblist/list.h"
+
+#include <list.h>
+#include <log.h>
 
 typedef struct _graph{
   bool isDirected;
@@ -46,6 +48,6 @@ int view_graph(Graph *self);
 int save_graph(Graph *self, const char *fileName);
 
 //Free graph and quit
-int quit(Graph *self);
+int delete_graph(Graph *self);
 
 #endif

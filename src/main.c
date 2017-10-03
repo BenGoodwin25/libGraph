@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
   //deleteEdgeFromNodeName(&graph, 6);
   view_graph(&graph);
 
-  quit(&graph);
+  delete_graph(&graph);
   return 0;
 }
 

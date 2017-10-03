@@ -1,7 +1,5 @@
 #include "graph.h"
 
-// TODO: Log errors etc...
-
 bool is_node_oob(Graph *self, int nodeName){
   return self->nbMaxNodes < nodeName;
 }
@@ -13,6 +11,7 @@ int create_graph(Graph *self, size_t maxNodes, bool isDirected){
   self->isDirected = isDirected;
   self->adjList = malloc(maxNodes*sizeof(Neighbour*));
   if(self->adjList == NULL){
+    LOG_ERROR("Unexpected allocation error while create the graph.\n");
     return 1;
   }
   for(int i=0; i < maxNodes; i++){
@@ -34,7 +33,7 @@ int load_graph(Graph *self, const char *graphFile){
   char cIsDirected;
   FILE* file = fopen(graphFile, "r");
   if(!file){
-    printf("[Error] Can't open file %s, file doesn't exists or can't be opened!\n", graphFile);
+    LOG_ERROR("Can't open file %s, file doesn't exists or can't be opened!\n", graphFile);
     return 1;
   }
 
@@ -130,6 +129,7 @@ int add_node(Graph *self, int nodeName){
   if(!is_node_oob(self, nodeName)){
     self->adjList[nodeName] = malloc(sizeof(Neighbour*));
     if(self->adjList[nodeName] == NULL){
+      LOG_ERROR("Unexpected allocation error while creating the node.\n");
       return 2;
     }
     self->adjList[nodeName]->neighbour = -1;
@@ -138,6 +138,7 @@ int add_node(Graph *self, int nodeName){
     self->adjList[nodeName]->nextNeighbour = NULL;
 
   } else {
+    LOG_ERROR("The node is out of bound of the graph.\n");
     return 1;
   }
   return 0;
@@ -148,13 +149,23 @@ int add_node(Graph *self, int nodeName){
 // error 9 : To node doesn't exists
 // error 10 : Edge already exists
 int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bool isSymmetric){
+  if(is_node_oob(self, fromName)){
+    LOG_ERROR("Startpoint node is out of bounds.\n");
+    return 6;
+  }
+  if(is_node_oob(self, toName)){
+    LOG_ERROR("Endpoint node is out of bounds.\n");
+  }
   if(!is_node_exists(self, fromName)){
+    LOG_ERROR("Startpoint node doesn't exists.\n");
     return 8;
   }
   if(!is_node_exists(self, toName)){
+    LOG_ERROR("Endpoint node doesn't exists.\n");
     return 9;
   }
   if(is_edge_exists(self, edgeName)){
+    LOG_ERROR("Edge already exists in the graph.\n");
     return 10;
   }
   if(self->isDirected && !isSymmetric){
@@ -190,18 +201,22 @@ bool is_edge_exists(Graph* self, int edgeName){
 // error 10 : Node unknown
 int remove_node(Graph *self, int nodeName){
   if(is_node_oob(self, nodeName)){
+    LOG_WARN("Node is out of bounds.\n");
+    LOG_INFO("No nodes affected.\n");
     return 9;
   }
   if(!is_node_exists(self, nodeName)){
+    LOG_WARN("Node doesn't exists.\n");
+    LOG_INFO("No nodes affected.\n");
     return 10;
   }
-  // Supression des edge reliées à la node
+  // Deleting edges linked to the node
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
       deleteEdgeFromNodeName(self->adjList[i], nodeName);
     }
   }
-  // Supression de la node en elle même
+  // Deleting node
   destroyList(self->adjList[nodeName]);
   free(self->adjList[nodeName]);
   return 0;
@@ -220,7 +235,6 @@ int remove_edge(Graph *self, int edgeName){
   return 0;
 }
 
-// TODO: gérer les erreurs?
 int output_graph_to_stream(Graph *self, FILE *stream){
   fputs("# maximum number of node\n", stream);
   fprintf(stream, "%zu\n", self->nbMaxNodes);
@@ -245,7 +259,7 @@ int output_graph_to_stream(Graph *self, FILE *stream){
 //Display a graph
 int view_graph(Graph *self){
   if(self->nbMaxNodes <= 0){
-    printf("[Error] Graph have to be initialized!\n");
+    LOG_ERROR("Graph have to be initialized!\n");
     return 1;
   }
   return output_graph_to_stream(self, stdout);
@@ -254,14 +268,19 @@ int view_graph(Graph *self){
 //Save the graph into a file
 int save_graph(Graph *self, const char *graphFile){
   FILE *file = fopen(graphFile, "w");
+  if(!file){
+    LOG_ERROR("Can't open or create the file %s.\n", graphFile);
+    LOG_INFO("Graph wasn't saved");
+    return 10;
+  }
   int error = output_graph_to_stream(self, file);
   fclose(file);
   return error;
 }
 
 //Free graph and quit
-int quit(Graph *self){
-  if(self != NULL){
+int delete_graph(Graph *self){
+  if(self != NULL && self->nbMaxNodes > 0){
     if(self->adjList != NULL){
       for (size_t i = 0; i < self->nbMaxNodes; i++){
         if(is_node_exists(self, i)){
