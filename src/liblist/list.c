@@ -27,7 +27,7 @@ bool edgeExist(Neighbour *self, int edgeName){
 // error 1 : Edge already exist
 // error 2 : unexpected allocation error
 int addEdge(Neighbour **self, int neighbourTo, int edgeName, int Weight){
-  if(edgeExist(self, edgeName)){
+  if(edgeExist(*self, edgeName)){
     printf("Edge already exist\n");
     return 1;
   }

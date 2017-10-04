@@ -86,34 +86,36 @@ int load_graph(Graph *self, const char *graphFile){
       // edges vars
       int neighbourName;
       int edgeName;
-      // scanning vars
-      char *edge = edges[i];
-      // Search for the first comma in edge list
-      char *firstComma = strchr(edge, ',');
-      // If there's a coma then we have multiple edges for this node
-      while(firstComma != NULL){
-        // looking for the size of string we have to allocate to get the edge description
-        int size = strcspn(edge, ",");
-        // create a temporary string to read the edge description
-        char *edgeDescription = (char*)malloc(size);
-        // copying the edge description in our temporary string
-        strncpy(edgeDescription, edge, size);
+      // Scanning vars
+      char separator[2] = ",";
+      char *subString;
+      ssize_t nbToken = 0;
+      // Counting the number of edges for this node
+      subString = strtok(edges[i], separator);
+      while(subString != NULL){
+        nbToken++;
+        subString = strtok(NULL, separator);
+      }
+      // Copying in memory edges description
+      char *edge[nbToken];
+      subString = strtok(edges[i], separator);
+      for (ssize_t i = 0; i < nbToken; i++){
+        size_t length = strlen(subString);
+        edge[i] = (char*)malloc(length+1);
+        memcpy(edge[i], subString, length);
+        edge[i][length+1] = '\0';
+        subString = strtok(NULL, separator);
+      }
+      // Now adding edges in reverse order
+      for (ssize_t i = nbToken-1; i >= 0; i--){
         // read our edge description from our string
-        sscanf(edgeDescription, " (%d/%d)", &neighbourName, &edgeName);
+        sscanf(edge[i], " (%d/%d)", &neighbourName, &edgeName);
         // Now that we read the description into our vars we can free the edgeDescription
-        free(edgeDescription);
+        free(edge[i]);
         // creating the edge from our edge values
         add_edge(self, i, neighbourName-1, edgeName, 0, true);
-        // then we can go to the next edge of the node (++firstComma to get the string after the first comma)
-        edge = ++firstComma;
-        // then searching for the next comma
-        firstComma = strchr(edge, ',');
       }
-      // if there is no more comma and we still have an edge description, compute it
-      if(firstComma == NULL && strlen(edge) > 2){
-        sscanf(edge, " (%d/%d)", &neighbourName, &edgeName);
-        add_edge(self, i, neighbourName-1, edgeName, 0, true);
-      }
+
       // We have finish to compute edges for this node, we free our temporary memory
       free(edges[i]);
     }
@@ -155,6 +157,7 @@ int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bo
   }
   if(is_node_oob(self, toName)){
     LOG_ERROR("Endpoint node is out of bounds.\n");
+    return 7;
   }
   if(!is_node_exists(self, fromName)){
     LOG_ERROR("Startpoint node doesn't exists.\n");
@@ -165,7 +168,8 @@ int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bo
     return 9;
   }
   if(is_edge_exists(self, edgeName)){
-    LOG_ERROR("Edge already exists in the graph.\n");
+    LOG_WARN("Edge %d already exists in the graph.\n", edgeName);
+    LOG_INFO("Edge wasn't created.\n");
     return 10;
   }
   if(self->isDirected && !isSymmetric){
