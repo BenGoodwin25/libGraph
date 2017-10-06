@@ -88,34 +88,14 @@ int load_graph(Graph *self, const char *graphFile){
       int edgeName;
       // Scanning vars
       char separator[2] = ",";
-      char *subString;
-      ssize_t nbToken = 0;
-      // Counting the number of edges for this node
-      subString = strtok(edges[i], separator);
+      char *subString = strtok(edges[i], separator);
       while(subString != NULL){
-        nbToken++;
-        subString = strtok(NULL, separator);
-      }
-      // Copying in memory edges description
-      char *edge[nbToken];
-      subString = strtok(edges[i], separator);
-      for (ssize_t i = 0; i < nbToken; i++){
-        size_t length = strlen(subString);
-        edge[i] = (char*)malloc(length+1);
-        memcpy(edge[i], subString, length);
-        edge[i][length+1] = '\0';
-        subString = strtok(NULL, separator);
-      }
-      // Now adding edges in reverse order
-      for (ssize_t i = nbToken-1; i >= 0; i--){
         // read our edge description from our string
-        sscanf(edge[i], " (%d/%d)", &neighbourName, &edgeName);
-        // Now that we read the description into our vars we can free the edgeDescription
-        free(edge[i]);
+        sscanf(subString, " (%d/%d)", &neighbourName, &edgeName);
         // creating the edge from our edge values
         add_edge(self, i, neighbourName-1, edgeName, 0, true);
+        subString = strtok(NULL, separator);
       }
-
       // We have finish to compute edges for this node, we free our temporary memory
       free(edges[i]);
     }
