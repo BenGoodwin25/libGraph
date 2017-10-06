@@ -108,6 +108,7 @@ int load_graph(Graph *self, const char *graphFile){
 // error 1 : node OOB
 // error 2 : unexpected allocation error
 int add_node(Graph *self, int nodeName){
+  nodeName--;
   if(!is_node_oob(self, nodeName)){
     self->adjList[nodeName] = malloc(sizeof(Neighbour*));
     if(self->adjList[nodeName] == NULL){

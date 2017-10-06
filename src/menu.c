@@ -41,7 +41,7 @@ void startMenu(Graph *graph){
 int readInputMainMenu(Graph *graph){
   char inputString[4];
   int choice = -1;
-  printf("Choice : ");
+  printf("Choice ");
   readUserInput(inputString, 4);
   printf("\n");
   if(sscanf(inputString, "%d", &choice) == 1){
@@ -61,12 +61,16 @@ int readInputMainMenu(Graph *graph){
         printf("\n");
         break;
       case ADD_NODE:
+        readNewNode(graph);
         break;
       case ADD_EDGE:
+        readNewEdge(graph);
         break;
       case DELETE_NODE:
+        readDeleteNode(graph);
         break;
       case DELETE_EDGE:
+        readDeleteEdge(graph);
         break;
       case SAVE_GRAPH:
         askSaveLocation(graph);
@@ -91,7 +95,7 @@ int readInputMainMenu(Graph *graph){
 
 int readUserInput(char *dest, int length){
   char *backspacePos = NULL;
-
+  printf("> ");
   if(fgets(dest, length, stdin) != NULL){
     backspacePos = strchr(dest, '\n');
     if(backspacePos != NULL){
@@ -111,7 +115,7 @@ int readUserInput(char *dest, int length){
 
 void readCreateGraph(Graph *graph){
   int maxNodes;
-  char maxNodeInput[11];
+  char maxNodeInput[MAX_DIGIT_LENGTH];
   char directedInput[2];
   bool isDirected;
 
@@ -120,7 +124,7 @@ void readCreateGraph(Graph *graph){
   }
 
   printf("# Enter the maximum number of nodes :\n");
-  readUserInput(maxNodeInput, 12);
+  readUserInput(maxNodeInput, MAX_DIGIT_LENGTH+1);
   if(sscanf(maxNodeInput, "%d", &maxNodes) == 1){
     printf("# Is the graph symmetric ? (y/n)\n");
     readUserInput(directedInput, 3);
@@ -133,7 +137,7 @@ void readCreateGraph(Graph *graph){
     }
     create_graph(graph, maxNodes, isDirected);
   } else {
-    LOG_ERROR("Can't convert your entry to a valid number\n");
+    LOG_ERROR_INT_CONVERT();
   }
 }
 
@@ -141,11 +145,11 @@ void askFileLocation(Graph *graph){
   char filePathInput[MAX_PATH_LENGTH];
   int error = -1;
   while(error != 0){
-    fprintf(stdout, "# Which file should be loaded ?\n");
+    printf("# Which file should be loaded ?\n");
     error = readUserInput(filePathInput, MAX_PATH_LENGTH+1);
   }
   if(load_graph(graph, filePathInput) == 0){
-    fprintf(stdout, "# Graph successfully loaded\n");
+    printf("# Graph successfully loaded\n");
   }
 }
 
@@ -153,11 +157,122 @@ void askSaveLocation(Graph *graph){
   char filePathInput[MAX_PATH_LENGTH];
   int error = -1;
   while(error != 0){
-    fprintf(stdout, "# Where graph should be saved ?\n");
+    printf("# Where graph should be saved ?\n");
     error = readUserInput(filePathInput, MAX_PATH_LENGTH+1);
   }
   if(save_graph(graph, filePathInput) == 0){
-    fprintf(stdout, "# Graph successfully saved\n");
+    printf("# Graph successfully saved\n");
+  } else {
+    printf("# Graph wasn't saved\n");
+  }
+}
+
+void readNewNode(Graph *graph){
+  char nodeNameInput[MAX_DIGIT_LENGTH];
+  int nodeName = -1;
+  int error = -1;
+  while(error != 0){
+    printf("# Enter the name of the node :\n");
+    error = readUserInput(nodeNameInput, MAX_DIGIT_LENGTH+1);
+  }
+  if(sscanf(nodeNameInput, "%d", &nodeName) != 1){
+    LOG_ERROR_INT_CONVERT();
+    printf("# Can't create Node\n");
+    return;
+  }
+  if(add_node(graph, nodeName) == 0){
+    printf("# Node successfully added\n");
+  } else {
+    printf("# Node wasn't added\n");
+  }
+}
+
+void readNewEdge(Graph *graph){
+  char userInput[MAX_DIGIT_LENGTH];
+  int fromNode = -1;
+  int toNode = -1;
+  int edgeName = -1;
+  char symmetricInput[2];
+  bool isSymmetric = false;
+
+  printf("# Enter the start point of the edge :\n");
+  readUserInput(userInput, MAX_DIGIT_LENGTH+1);
+  if(sscanf(userInput, "%d", &fromNode) != 1){
+    LOG_ERROR_INT_CONVERT();
+    printf("# Can't create the edge\n");
+    return;
+  }
+  printf("# Enter the end point of the edge :\n");
+  readUserInput(userInput, MAX_DIGIT_LENGTH+1);
+  if(sscanf(userInput, "%d", &toNode) != 1){
+    LOG_ERROR_INT_CONVERT();
+    printf("# Can't create the edge\n");
+    return;
+  }
+  printf("# Enter the edge name :\n");
+  readUserInput(userInput, MAX_DIGIT_LENGTH+1);
+  if(sscanf(userInput, "%d", &edgeName) != 1){
+    LOG_ERROR_INT_CONVERT();
+    printf("# Can't create the edge\n");
+    return;
+  }
+  if(graph->isDirected) {
+    printf("# Is the edge symmetric ? (y/n)\n");
+    readUserInput(symmetricInput, 3);
+    if(symmetricInput[0] == 'y'){
+      isSymmetric = true;
+    } else if(symmetricInput[0] == 'n') {
+      isSymmetric = false;
+    } else {
+        LOG_ERROR("Can't determine by your entry if it's symmetric or not.\n");
+        printf("# Edge wasn't added\n");
+        return;
+    }
+  }
+  if(add_edge(graph, fromNode, toNode, edgeName, 0, isSymmetric) == 0) {
+    printf("# Edge successfully added\n");
+  } else {
+    printf("# Edge wasn't added\n");
+  }
+}
+
+void readDeleteNode(Graph *graph) {
+  char nodeNameInput[MAX_DIGIT_LENGTH];
+  int nodeName = -1;
+  int error = -1;
+  while(error != 0){
+    printf("# Enter the name of the node to delete :\n");
+    error = readUserInput(nodeNameInput, MAX_DIGIT_LENGTH+1);
+  }
+  if(sscanf(nodeNameInput, "%d", &nodeName) != 1){
+    LOG_ERROR_INT_CONVERT();
+    printf("# Can't delete Node\n");
+    return;
+  }
+  if(remove_node(graph, nodeName) == 0){
+    printf("# Node successfully deleted\n");
+  } else {
+    printf("# Graph wasn't modified\n");
+  }
+}
+
+void readDeleteEdge(Graph *graph){
+  char edgeNameInput[MAX_DIGIT_LENGTH];
+  int edgeName = -1;
+  int error = -1;
+  while(error != 0){
+    printf("# Enter the name of the edge to delete :\n");
+    error = readUserInput(edgeNameInput, MAX_DIGIT_LENGTH+1);
+  }
+  if(sscanf(edgeNameInput, "%d", &edgeName) != 1){
+    LOG_ERROR_INT_CONVERT();
+    printf("# Can't deleete Edge\n");
+    return;
+  }
+  if(remove_edge(graph, edgeName) == 0){
+    printf("# Edge successfully deleted\n");
+  } else {
+    printf("# Graph wasn't modified\n");
   }
 }
 
