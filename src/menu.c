@@ -6,7 +6,6 @@ void flushReadBuffer() {
 }
 
 void printHeader(){
-  //---------MENU--------------//
   printf("##################################################################\n");
   printf("#                                                                #\n");
   printf("#                      graph-manager(%s)                      #\n",VERSION);
@@ -16,14 +15,17 @@ void printHeader(){
 
 void printMainMenu(){
   printf("\n");
-  printf("#  0 : Create Example Graph\n");
-  printf("#  1 : Create Graph\n");
-  printf("#  2 : Load Graph from file\n");
-  printf("#  3 : Display Graph\n");
-  printf("#  4 : Modify Graph\n");
-  printf("#  5 : Save Graph to file\n");
-  printf("#  6 : Delete Graph\n");
-  printf("#  7 : Quit (and delete Graph)\n");
+  printf("#  %d : Create Example Graph\n", CREATE_EXAMPLE_GRAPH);
+  printf("#  %d : Create Graph\n", CREATE_GRAPH);
+  printf("#  %d : Load Graph from file\n", LOAD_FROM_FILE);
+  printf("#  %d : Display Graph\n", DISPLAY_GRAPH);
+  printf("#  %d : Add Node\n", ADD_NODE);
+  printf("#  %d : Add Edge\n", ADD_EDGE);
+  printf("#  %d : Delete Node\n", DELETE_NODE);
+  printf("#  %d : Delete Edge\n", DELETE_EDGE);
+  printf("#  %d : Save Graph to file\n", SAVE_GRAPH);
+  printf("#  %d : Delete Graph\n", DELETE_GRAPH);
+  printf("#  %d : Quit (and delete Graph)\n", QUIT);
   printf("\n");
 }
 
@@ -37,50 +39,48 @@ void startMenu(Graph *graph){
 }
 
 int readInputMainMenu(Graph *graph){
-  char inputString[3];
+  char inputString[4];
   int choice = -1;
   printf("Choice : ");
-  readUserInput(inputString, 3);
+  readUserInput(inputString, 4);
   printf("\n");
   if(sscanf(inputString, "%d", &choice) == 1){
     switch(choice){
-      case 0:
-        // Create an example graph
+      case CREATE_EXAMPLE_GRAPH:
         createExampleGraph(graph);
         break;
-      case 1:
-        // Ask user infos to create a graph
+      case CREATE_GRAPH:
         readCreateGraph(graph);
         break;
-      case 2:
-        // Load a graph from file
+      case LOAD_FROM_FILE:
         askFileLocation(graph);
         break;
-      case 3:
-        // Display the current graph
+      case DISPLAY_GRAPH:
         printf("# Graph :\n");
         view_graph(graph);
         printf("\n");
         break;
-      case 4:
-        // Menu for modifying a graph
+      case ADD_NODE:
         break;
-      case 5:
-        //Save current Graph to file
+      case ADD_EDGE:
+        break;
+      case DELETE_NODE:
+        break;
+      case DELETE_EDGE:
+        break;
+      case SAVE_GRAPH:
         askSaveLocation(graph);
         break;
-      case 6:
-        // Deleting the graph
+      case DELETE_GRAPH:
         delete_graph(graph);
         printf("# Graph deleted!\n");
         break;
-      case 7:
-        // Quit the application
+      case QUIT:
         delete_graph(graph);
         return 1;
         break;
       default:
-        fputs("# Please make a choice between 0 and 7\n", stdout);
+        fputs("# Please make a choice between 0 and 10\n", stdout);
         break;
     }
   } else {

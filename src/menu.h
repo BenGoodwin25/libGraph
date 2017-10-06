@@ -7,6 +7,18 @@
 
 #define MAX_PATH_LENGTH 256
 
+#define CREATE_EXAMPLE_GRAPH 0
+#define CREATE_GRAPH 1
+#define LOAD_FROM_FILE 2
+#define DISPLAY_GRAPH 3
+#define ADD_NODE 4
+#define ADD_EDGE 5
+#define DELETE_NODE 6
+#define DELETE_EDGE 7
+#define SAVE_GRAPH 8
+#define DELETE_GRAPH 9
+#define QUIT 10
+
 // Main menu
 void printHeader();
 void printMainMenu();

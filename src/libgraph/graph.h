@@ -7,7 +7,6 @@
 #include <string.h>
 #include <sys/types.h>
 
-
 #include <list.h>
 #include <log.h>
 
@@ -24,7 +23,6 @@ int create_graph(Graph *self, size_t maxNodes, bool isDirected);
 int load_graph(Graph *self, const char *graphFile);
 
 //add a node
-
 int add_node(Graph *self, int nodeName);
 
 //add an edge
