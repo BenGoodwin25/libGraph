@@ -92,7 +92,7 @@ int load_graph(Graph *self, const char *graphFile){
         // read our edge description from our string
         sscanf(subString, " (%d/%d)", &neighbourName, &edgeName);
         // creating the edge from our edge values
-        add_edge(self, i, neighbourName-1, edgeName, 0, true);
+        add_edge(self, i+1, neighbourName, edgeName, 0, true);
         subString = strtok(NULL, separator);
       }
       // We have finish to compute edges for this node, we free our temporary memory
@@ -131,6 +131,9 @@ int add_node(Graph *self, int nodeName){
 // error 9 : To node doesn't exists
 // error 10 : Edge already exists
 int add_edge(Graph *self, int fromName, int toName, int edgeName, int Weight, bool isSymmetric){
+  // Recompute to get the real names
+  fromName--;
+  toName--;
   if(is_node_oob(self, fromName)){
     LOG_ERROR("Startpoint node is out of bounds.\n");
     return 6;
