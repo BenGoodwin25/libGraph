@@ -51,8 +51,7 @@ int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
   tmp=self->nextNeighbour;
   int error;
   while(tmp->neighbour != nodeName && tmp->nextNeighbour != NULL ){
-    //error=deleteEdge(self,tmp->edgeName);
-    error=delFirstEdge(tmp);
+    error=deleteEdge(self,tmp->edgeName);
   }
   return error;
 }
@@ -62,7 +61,7 @@ int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
 int deleteEdge(Neighbour* self, int edgeName){
   if(self != NULL) {
     Neighbour *tmp = malloc(sizeof(Neighbour));
-    while (self->nextNeighbour != NULL || tmp != NULL) {
+    while (self->nextNeighbour != NULL && tmp != NULL) {
       if (self->nextNeighbour->edgeName == edgeName) {
         tmp->nextNeighbour = self->nextNeighbour->nextNeighbour;
         free(self->nextNeighbour);
@@ -131,7 +130,7 @@ int outputList(Neighbour *self, FILE *stream){
     Neighbour *tmp=self;
     while(tmp != NULL){
       if(tmp->neighbour != -1){
-        fprintf(stream,"(%d/%d)", tmp->neighbour+1, tmp->edgeName);
+        fprintf(stream,"(%d/%d)", tmp->neighbour, tmp->edgeName);
         //Yes all that for a ", " ...
         if(tmp->nextNeighbour != NULL && tmp->nextNeighbour->neighbour != -1){
           fprintf(stream,", ");
