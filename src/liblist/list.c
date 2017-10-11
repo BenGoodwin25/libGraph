@@ -130,7 +130,7 @@ int outputList(Neighbour *self, FILE *stream){
     Neighbour *tmp=self;
     while(tmp != NULL){
       if(tmp->neighbour != -1){
-        fprintf(stream,"(%d/%d)", tmp->neighbour, tmp->edgeName);
+        fprintf(stream,"(%d/%d)", tmp->neighbour+1, tmp->edgeName);
         //Yes all that for a ", " ...
         if(tmp->nextNeighbour != NULL && tmp->nextNeighbour->neighbour != -1){
           fprintf(stream,", ");
