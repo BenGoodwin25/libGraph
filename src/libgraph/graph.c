@@ -106,7 +106,12 @@ int load_graph(Graph *self, const char *graphFile){
 //add a node
 // error 1 : node OOB
 // error 2 : unexpected allocation error
+// error 3 : error node name
 int add_node(Graph *self, int nodeName){
+  if(nodeName <= 0) {
+    LOG_ERROR("Can't create a node named 0 or less");
+    return 3;
+  }
   nodeName--;
   if(!is_node_oob(self, nodeName)){
     self->adjList[nodeName] = malloc(sizeof(Neighbour*));
@@ -187,6 +192,7 @@ bool is_edge_exists(Graph* self, int edgeName){
 // error 9 : Node is OOB
 // error 10 : Node unknown
 int remove_node(Graph *self, int nodeName){
+  nodeName--;
   if(is_node_oob(self, nodeName)){
     LOG_WARN("Node is out of bounds.\n");
     LOG_INFO("No nodes affected.\n");

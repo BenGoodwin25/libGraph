@@ -269,7 +269,6 @@ void readDeleteEdge(Graph *graph){
 
 void createExampleGraph(Graph *graph){
   create_graph(graph, 11, false);
-  add_node(graph, 0);
   add_node(graph, 1);
   add_node(graph, 2);
   add_node(graph, 3);
@@ -277,11 +276,12 @@ void createExampleGraph(Graph *graph){
   add_node(graph, 5);
   add_node(graph, 6);
   add_node(graph, 7);
-  add_edge(graph, 0, 6, 1, 0, true);
-  add_edge(graph, 0, 2, 2, 0, true);
-  add_edge(graph, 0, 3, 5, 0, true);
-  add_edge(graph, 1, 4, 4, 0, true);
-  add_edge(graph, 1, 6, 8, 0, true);
-  add_edge(graph, 3, 6, 3, 0, true);
+  add_node(graph, 8);
+  add_edge(graph, 1, 7, 1, 0, true);
+  add_edge(graph, 1, 3, 2, 0, true);
+  add_edge(graph, 1, 4, 5, 0, true);
+  add_edge(graph, 2, 5, 4, 0, true);
+  add_edge(graph, 2, 7, 8, 0, true);
+  add_edge(graph, 4, 7, 3, 0, true);
   printf("# Example graph created!\n");
 }
