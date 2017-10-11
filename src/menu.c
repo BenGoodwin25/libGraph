@@ -5,14 +5,6 @@ void flushReadBuffer() {
   while ((c = getchar()) != '\n' && c != EOF) { }
 }
 
-void printHeader(){
-  printf("##################################################################\n");
-  printf("#                                                                #\n");
-  printf("#                      graph-manager(%s)                      #\n",VERSION);
-  printf("#                                                                #\n");
-  printf("##################################################################\n");
-}
-
 void printMainMenu(){
   printf("\n");
   printf("#  %d : Create Example Graph\n", CREATE_EXAMPLE_GRAPH);
@@ -31,7 +23,6 @@ void printMainMenu(){
 
 void startMenu(Graph *graph){
   int quit = 0;
-  printHeader();
   while(quit == 0){
     printMainMenu();
     quit = readInputMainMenu(graph);
@@ -266,7 +257,7 @@ void readDeleteEdge(Graph *graph){
   }
   if(sscanf(edgeNameInput, "%d", &edgeName) != 1){
     LOG_ERROR_INT_CONVERT();
-    printf("# Can't deleete Edge\n");
+    printf("# Can't delete Edge\n");
     return;
   }
   if(remove_edge(graph, edgeName) == 0){

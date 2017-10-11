@@ -34,7 +34,7 @@ static inline void log_message(int level, const char *format, ...){
 }
 
 #ifndef LOG_LEVEL
-#define LOG_LEVEL LOG_LEVEL_NOTHING
+#define LOG_LEVEL LOG_LEVEL_INFO
 #endif
 
 #if LOG_LEVEL >= LOG_LEVEL_FATAL
