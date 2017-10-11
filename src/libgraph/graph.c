@@ -65,13 +65,12 @@ int load_graph(Graph *self, const char *graphFile){
     int nodeName;
     // Scan for the nodeName
     fscanf(file, "%d:", &nodeName);
-    // Decrease nodeName to get the real name in memory
-    nodeName--;
     // Create the node in our graph
     add_node(self, nodeName);
     // Get edges for that node
     fgets(buffer, BUFFER_SIZE, file);
     // Storing edges informations in memory to compute it later
+    nodeName--;
     edges[nodeName] = (char*)malloc(strlen(buffer)+1);
     memcpy(edges[nodeName], buffer, strlen(buffer)+1);
     edges[nodeName][strlen(buffer)+1] = '\0';

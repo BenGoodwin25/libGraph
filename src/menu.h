@@ -23,7 +23,6 @@
 #define QUIT 10
 
 // Main menu
-void printHeader();
 void printMainMenu();
 void startMenu(Graph *graph);
 int readInputMainMenu(Graph *graph);
