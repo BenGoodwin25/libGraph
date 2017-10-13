@@ -115,18 +115,24 @@ void readCreateGraph(Graph *graph){
   }
 
   printf("# Enter the maximum number of nodes :\n");
-  readUserInput(maxNodeInput, MAX_DIGIT_LENGTH+1);
+  while(readUserInput(maxNodeInput, MAX_DIGIT_LENGTH+1) != 0){}
   if(sscanf(maxNodeInput, "%d", &maxNodes) == 1){
     printf("# Is the graph symmetric ? (y/n)\n");
-    readUserInput(directedInput, 3);
+    while(readUserInput(directedInput, 3)!=0){}
     if(directedInput[0] == 'y'){
       isDirected = true;
     } else if(directedInput[0] == 'n') {
       isDirected = false;
     } else {
         LOG_ERROR("Can't determine by your entry if it's directed or not.\n");
+        return;
     }
-    create_graph(graph, maxNodes, isDirected);
+    if(create_graph(graph, maxNodes, isDirected) == 0){
+      printf("# Graph succefully created!\n");
+    } else {
+      LOG_ERROR("Error while creating the graph.\n");
+      printf("# Graph wasn't created.\n");
+    }
   } else {
     LOG_ERROR_INT_CONVERT();
   }
