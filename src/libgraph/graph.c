@@ -217,15 +217,17 @@ int remove_node(Graph *self, int nodeName){
 
 //Delete an edge
 int remove_edge(Graph *self, int edgeName){
+  int error=0;
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
-      int error = deleteEdge(self->adjList[i], edgeName);
+      error = deleteEdge(&self->adjList[i], edgeName);
       if (error != 0){
-        return error;
+        LOG_INFO("node : %d, no edge %d found here\n",i+1,edgeName);
+        //return error;
       }
     }
   }
-  return 0;
+  return error;
 }
 
 int output_graph_to_stream(Graph *self, FILE *stream){

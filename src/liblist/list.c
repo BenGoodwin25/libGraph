@@ -50,45 +50,53 @@ int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
   Neighbour *tmp;
   tmp=self->nextNeighbour;
   int error;
-  while(tmp->neighbour != nodeName && tmp->nextNeighbour != NULL ){
-    error=deleteEdge(self,tmp->edgeName);
+  while(tmp != NULL){
+    if(tmp->neighbour == nodeName){
+      error=deleteEdge(self,tmp->edgeName);
+    }
+    tmp=tmp->neighbour;
   }
+
   return error;
 }
 
 //
 // error 1 : Edge doesn't exist
-int deleteEdge(Neighbour* self, int edgeName){
-  if(self != NULL) {
-    Neighbour *tmp = malloc(sizeof(Neighbour));
-    while (self->nextNeighbour != NULL && tmp != NULL) {
-      if (self->nextNeighbour->edgeName == edgeName) {
-        tmp->nextNeighbour = self->nextNeighbour->nextNeighbour;
-        free(self->nextNeighbour);
-        self->nextNeighbour = NULL;
-        self->nextNeighbour = tmp->nextNeighbour;
-        tmp->nextNeighbour = NULL;
-        free(tmp);
-        return 0;
-      }
-      tmp = tmp->nextNeighbour;
-    }
-    free(tmp);
+int deleteEdge(Neighbour** self, int edgeName){
+  Neighbour *tmp=self;
+  LOG_INFO("edgeName %d\n",tmp->edgeName);
+  if(tmp->edgeName == edgeName){
+    return delFirstEdge(self);
   }
-  return 1;
+  bool error=true;
+  while(tmp->nextNeighbour != NULL && tmp->nextNeighbour->edgeName != edgeName){
+    tmp=tmp->nextNeighbour;
+  }
+
+  if(tmp->nextNeighbour != NULL && tmp->nextNeighbour->edgeName == edgeName){
+    Neighbour *trash;
+    trash=tmp->nextNeighbour->nextNeighbour;
+    free(tmp->nextNeighbour);
+    tmp->nextNeighbour=trash;
+    LOG_INFO("Edge suppress\n");
+    error=false;
+  }
+  if(error){
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
 //add a node
 // error 1 : Edge doesn't exist
-int delFirstEdge(Neighbour* self){
-  if(!isEmptyList(self)){
-    Neighbour *tmp = malloc(sizeof(Neighbour));
-    tmp->nextNeighbour = self->nextNeighbour->nextNeighbour;
-    free(self->nextNeighbour);
-    self->nextNeighbour=NULL;
-    self->nextNeighbour = tmp->nextNeighbour;
-    tmp->nextNeighbour = NULL;
-    free(tmp);
+int delFirstEdge(Neighbour** self){
+  LOG_INFO("delFirstEdge\n");
+  Neighbour *tmp;
+  tmp = self;
+  if(!isEmptyList(tmp)){
+    LOG_INFO("list not empty\n");
+
     return 0;
   }
   printf("No edge to delete\n");

@@ -1,6 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <log.h>
 
 typedef struct _neighbour {
   int neighbour;
@@ -21,10 +22,10 @@ int addEdge(Neighbour **self, int neighbour, int edgeName, int Weight);
 int deleteEdgeFromNodeName(Neighbour* self, int nodeName);
 
 //suppression du node ayant la donnée neighbour
-int deleteEdge(Neighbour* self, int edgeName);
+int deleteEdge(Neighbour** self, int edgeName);
 
 //suppression du premier node
-int delFirstEdge(Neighbour* self);
+int delFirstEdge(Neighbour** self);
 
 //destruction
 int destroyList(Neighbour* self);
