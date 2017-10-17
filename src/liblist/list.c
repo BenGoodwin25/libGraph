@@ -46,10 +46,9 @@ int addEdge(Neighbour **self, int neighbourTo, int edgeName, int Weight){
 
 //
 // Error $deleteEdge()$ : code of deleteEdge
-int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
-  Neighbour *tmp;
-  tmp=self->nextNeighbour;
+int deleteEdgeFromNodeName(Neighbour** self, int nodeName){
   int error;
+  Neighbour *tmp=*self;
   while(tmp != NULL){
     if(tmp->neighbour == nodeName){
       error=deleteEdge(self,tmp->edgeName);
@@ -63,8 +62,7 @@ int deleteEdgeFromNodeName(Neighbour* self, int nodeName){
 //
 // error 1 : Edge doesn't exist
 int deleteEdge(Neighbour** self, int edgeName){
-  Neighbour *tmp=self;
-  LOG_INFO("edgeName %d\n",tmp->edgeName);
+  Neighbour *tmp=*self;
   if(tmp->edgeName == edgeName){
     return delFirstEdge(self);
   }
@@ -92,11 +90,14 @@ int deleteEdge(Neighbour** self, int edgeName){
 // error 1 : Edge doesn't exist
 int delFirstEdge(Neighbour** self){
   LOG_INFO("delFirstEdge\n");
-  Neighbour *tmp;
-  tmp = self;
+  Neighbour *tmp=*self;
   if(!isEmptyList(tmp)){
-    LOG_INFO("list not empty\n");
-
+    Neighbour *tmp2 = malloc(sizeof(Neighbour));
+    *tmp2 = *tmp->nextNeighbour;
+    free(tmp);
+    *tmp = *tmp2;
+    free(tmp2);
+    //*self = tmp;
     return 0;
   }
   printf("No edge to delete\n");

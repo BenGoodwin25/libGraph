@@ -223,7 +223,7 @@ int remove_node(Graph *self, int nodeName){
   // Deleting edges linked to the node
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
-      deleteEdgeFromNodeName(self->adjList[i], nodeName);
+      deleteEdgeFromNodeName(&self->adjList[i], nodeName);
     }
   }
   // Deleting node
@@ -239,7 +239,7 @@ int remove_edge(Graph *self, int edgeName){
     if(is_node_exists(self, i)){
       error = deleteEdge(&self->adjList[i], edgeName);
       if (error != 0){
-        LOG_INFO("node : %d, no edge %d found here\n",i+1,edgeName);
+        //LOG_INFO("node : %d, no edge %d found here\n",i+1,edgeName);
         //return error;
       }
     }

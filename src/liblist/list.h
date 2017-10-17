@@ -1,7 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <log.h>
+#include "log.h"
 
 typedef struct _neighbour {
   int neighbour;
@@ -9,6 +9,10 @@ typedef struct _neighbour {
 	int weight;
 	struct _neighbour *nextNeighbour;
 } Neighbour;
+
+typedef struct _firstNeighbour {
+	Neighbour first;
+} firstNeighbour;
 
 //creation
 Neighbour createList();
@@ -19,7 +23,7 @@ bool edgeExist(Neighbour *self, int edgeName);
 int addEdge(Neighbour **self, int neighbour, int edgeName, int Weight);
 
 // supression de toutes les edges dans la liste donnée ayant pour endpoint le  point passer en paramètre
-int deleteEdgeFromNodeName(Neighbour* self, int nodeName);
+int deleteEdgeFromNodeName(Neighbour** self, int nodeName);
 
 //suppression du node ayant la donnée neighbour
 int deleteEdge(Neighbour** self, int edgeName);
