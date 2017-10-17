@@ -4,6 +4,15 @@ bool is_node_oob(Graph *self, int nodeName){
   return self->nbMaxNodes < nodeName;
 }
 
+void removeSubstring(char *s,const char *toremove)
+{
+  if(s != NULL){
+    while( (s=strstr(s,toremove)) != NULL ) {
+      memmove(s,s+strlen(toremove),1+strlen(s+strlen(toremove)));
+    }
+  }
+}
+
 //create a graph with the right number of nodes
 // error 1 : unexpected allocation error
 int create_graph(Graph *self, size_t maxNodes, bool isDirected){
@@ -64,16 +73,17 @@ int load_graph(Graph *self, const char *graphFile){
   while(!feof(file)){
     int nodeName;
     // Scan for the nodeName
-    fscanf(file, "%d:", &nodeName);
-    // Create the node in our graph
-    add_node(self, nodeName);
-    // Get edges for that node
-    fgets(buffer, BUFFER_SIZE, file);
-    // Storing edges informations in memory to compute it later
-    nodeName--;
-    edges[nodeName] = (char*)malloc(strlen(buffer)+1);
-    memcpy(edges[nodeName], buffer, strlen(buffer)+1);
-    edges[nodeName][strlen(buffer)+1] = '\0';
+    if (fscanf(file, "%d:", &nodeName) == 1){
+      // Create the node in our graph
+      add_node(self, nodeName);
+      // Get edges for that node
+      fgets(buffer, BUFFER_SIZE, file);
+      // Storing edges informations in memory to compute it later
+      nodeName--;
+      edges[nodeName] = (char*)malloc(strlen(buffer));
+      memcpy(edges[nodeName], buffer, strlen(buffer));
+      edges[nodeName][strlen(buffer)-1] = '\0';
+    }
   }
   // We have finish with our file so we can close it
   fclose(file);
@@ -90,9 +100,16 @@ int load_graph(Graph *self, const char *graphFile){
       char *subString = strtok(edges[i], separator);
       while(subString != NULL){
         // read our edge description from our string
-        sscanf(subString, " (%d/%d)", &neighbourName, &edgeName);
-        // creating the edge from our edge values
-        add_edge(self, i+1, neighbourName, edgeName, 0, true);
+        if (sscanf(subString, " (%d/%d)", &neighbourName, &edgeName) == 2){
+          // creating the edge from our edge values
+          add_edge(self, i+1, neighbourName, edgeName, 0, false);
+          // Delete the added edge if it's not directed or not symmetric
+          if( !self->isDirected /* || edgeIsSymmetric */){
+            char *edgeStr = malloc(sizeof(char)*255);
+            sprintf(edgeStr, "(%d/%d)", i+1, edgeName);
+            removeSubstring(edges[neighbourName-1], edgeStr);
+          }
+        }
         subString = strtok(NULL, separator);
       }
       // We have finish to compute edges for this node, we free our temporary memory
@@ -109,7 +126,7 @@ int load_graph(Graph *self, const char *graphFile){
 // error 3 : error node name
 int add_node(Graph *self, int nodeName){
   if(nodeName <= 0) {
-    LOG_ERROR("Can't create a node named 0 or less");
+    LOG_ERROR("Can't create a node named 0 or less\n");
     return 3;
   }
   nodeName--;
