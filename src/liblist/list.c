@@ -76,7 +76,7 @@ int deleteEdge(Neighbour** self, int edgeName){
     trash=tmp->nextNeighbour->nextNeighbour;
     free(tmp->nextNeighbour);
     tmp->nextNeighbour=trash;
-    LOG_INFO("Edge suppress\n");
+    //LOG_INFO("Edge deleted\n");
     error=false;
   }
   if(error){
@@ -89,15 +89,9 @@ int deleteEdge(Neighbour** self, int edgeName){
 //add a node
 // error 1 : Edge doesn't exist
 int delFirstEdge(Neighbour** self){
-  LOG_INFO("delFirstEdge\n");
   Neighbour *tmp=*self;
   if(!isEmptyList(tmp)){
-    Neighbour *tmp2 = malloc(sizeof(Neighbour));
-    *tmp2 = *tmp->nextNeighbour;
-    free(tmp);
-    *tmp = *tmp2;
-    free(tmp2);
-    *self = tmp;
+    *self = tmp->nextNeighbour;
     return 0;
   }
   printf("No edge to delete\n");

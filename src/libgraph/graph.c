@@ -15,6 +15,9 @@ void removeSubstring(char *s,const char *toremove) {
 //create a graph with the right number of nodes
 // error 1 : unexpected allocation error
 int create_graph(Graph *self, size_t maxNodes, bool isDirected){
+  if(self->nbMaxNodes > 0){
+    delete_graph(self);
+  }
   self->nbMaxNodes = maxNodes;
   self->isDirected = isDirected;
   self->adjList = malloc(maxNodes*sizeof(Neighbour*));
@@ -302,7 +305,7 @@ int delete_graph(Graph *self){
       for (size_t i = 0; i < self->nbMaxNodes; i++){
         if(is_node_exists(self, i)){
           destroyList(self->adjList[i]);
-          free(self->adjList[i]);
+          free((*self).adjList[i]);
         }
       }
       free(self->adjList);
