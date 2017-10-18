@@ -229,7 +229,7 @@ int remove_node(Graph *self, int nodeName){
     }
   }
   // Deleting node
-  destroyList(self->adjList[nodeName]);
+  destroyList(&self->adjList[nodeName]);
   free(self->adjList[nodeName]);
   (*self).adjList[nodeName] = NULL;
   return 0;
@@ -304,7 +304,7 @@ int delete_graph(Graph *self){
     if(self->adjList != NULL){
       for (size_t i = 0; i < self->nbMaxNodes; i++){
         if(is_node_exists(self, i)){
-          destroyList(self->adjList[i]);
+          destroyList(&self->adjList[i]);
           free((*self).adjList[i]);
         }
       }

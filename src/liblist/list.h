@@ -32,7 +32,7 @@ int deleteEdge(Neighbour** self, int edgeName);
 int delFirstEdge(Neighbour** self);
 
 //destruction
-int destroyList(Neighbour* self);
+int destroyList(Neighbour** self);
 
 //vide
 bool isEmptyList(const Neighbour* self);

@@ -92,15 +92,16 @@ int delFirstEdge(Neighbour** self){
   Neighbour *tmp=*self;
   if(!isEmptyList(tmp)){
     *self = tmp->nextNeighbour;
+    free(tmp);
     return 0;
   }
   printf("No edge to delete\n");
   return 1;
 }
 
-int destroyList(Neighbour *self){
-  while(!isEmptyList(self)){
-    delFirstEdge(&self);
+int destroyList(Neighbour **self){
+  while(!isEmptyList(*self)){
+    delFirstEdge(self);
   }
   return 0;
 }
