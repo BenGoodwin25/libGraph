@@ -4,8 +4,7 @@ bool is_node_oob(Graph *self, int nodeName){
   return self->nbMaxNodes < nodeName;
 }
 
-void removeSubstring(char *s,const char *toremove)
-{
+void removeSubstring(char *s,const char *toremove) {
   if(s != NULL){
     while( (s=strstr(s,toremove)) != NULL ) {
       memmove(s,s+strlen(toremove),1+strlen(s+strlen(toremove)));
@@ -229,22 +228,28 @@ int remove_node(Graph *self, int nodeName){
   // Deleting node
   destroyList(self->adjList[nodeName]);
   free(self->adjList[nodeName]);
+  (*self).adjList[nodeName] = NULL;
   return 0;
+}
+
+int hasNoErrorInArray(int errors[], int size) {
+  for (int i = 0; i < size; i++) {
+    if(errors[i] == 0) {
+      return 0;
+    }
+  }
+  return 1;
 }
 
 //Delete an edge
 int remove_edge(Graph *self, int edgeName){
-  int error=0;
+  int error[self->nbMaxNodes];
   for(int i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
-      error = deleteEdge(&self->adjList[i], edgeName);
-      if (error != 0){
-        //LOG_INFO("node : %d, no edge %d found here\n",i+1,edgeName);
-        //return error;
-      }
+      error[i] = deleteEdge(&self->adjList[i], edgeName);
     }
   }
-  return error;
+  return hasNoErrorInArray(error, self->nbMaxNodes);
 }
 
 int output_graph_to_stream(Graph *self, FILE *stream){

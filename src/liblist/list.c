@@ -48,12 +48,12 @@ int addEdge(Neighbour **self, int neighbourTo, int edgeName, int Weight){
 // Error $deleteEdge()$ : code of deleteEdge
 int deleteEdgeFromNodeName(Neighbour** self, int nodeName){
   int error;
-  Neighbour *tmp=*self;
+  Neighbour *tmp = *self;
   while(tmp != NULL){
     if(tmp->neighbour == nodeName){
       error=deleteEdge(self,tmp->edgeName);
     }
-    tmp=tmp->neighbour;
+    tmp=tmp->nextNeighbour;
   }
 
   return error;
@@ -97,7 +97,7 @@ int delFirstEdge(Neighbour** self){
     free(tmp);
     *tmp = *tmp2;
     free(tmp2);
-    //*self = tmp;
+    *self = tmp;
     return 0;
   }
   printf("No edge to delete\n");
@@ -106,7 +106,7 @@ int delFirstEdge(Neighbour** self){
 
 int destroyList(Neighbour *self){
   while(!isEmptyList(self)){
-    delFirstEdge(self);
+    delFirstEdge(&self);
   }
   return 0;
 }
