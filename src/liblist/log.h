@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#define LOG_LEVEL_NOTHING 0
 #define LOG_LEVEL_FATAL 1
 #define LOG_LEVEL_ERROR 2
 #define LOG_LEVEL_WARN  3

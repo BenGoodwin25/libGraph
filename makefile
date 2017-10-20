@@ -3,7 +3,7 @@ COMPILER=gcc
 #Archiver for static lib
 ARCHIVER=ar
 #Possible Arguments
-CFLAGS=-g -Wall -std=c11 -O0
+CFLAGS=-g -Wall -Wextra -std=c11 -O0
 #Here insert the library you could need
 LFLAGS=
 
@@ -60,9 +60,6 @@ $(OBJDIR)/libgraph/%.o : $(GRAPHSRCDIR)/%.c $(GRAPHSRCDIR)/%.h
 $(OBJDIR)/liblist/%.o : $(LISTSRCDIR)/%.c $(LISTSRCDIR)/%.h
 	$(COMPILER) -c $< $(CFLAGS) -o $(OBJDIR)/liblist/$*.o
 
-#Fonctionaly to come lather
-#install:
-
 #Creation of folders
 $(OBJDIR) :
 	mkdir -p $(OBJDIR)
@@ -82,6 +79,3 @@ clean:
 mrproper: clean
 	rm -r $(BINDIR)
 	rm -r $(LIBDIR)
-
-#Just a debug command to show var value in make
-print-%  : ; @echo $* = $($*)

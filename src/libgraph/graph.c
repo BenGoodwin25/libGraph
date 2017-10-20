@@ -1,6 +1,6 @@
 #include "graph.h"
 
-bool is_node_oob(Graph *self, int nodeName){
+bool is_node_oob(Graph *self, size_t nodeName){
   return self->nbMaxNodes < nodeName;
 }
 
@@ -25,7 +25,7 @@ int create_graph(Graph *self, size_t maxNodes, bool isDirected){
     LOG_ERROR("Unexpected allocation error while create the graph.\n");
     return 1;
   }
-  for(int i=0; i < maxNodes; i++){
+  for(size_t i=0; i < maxNodes; i++){
     self->adjList[i] = NULL;
   }
   return 0;
@@ -197,7 +197,7 @@ bool is_node_exists(Graph* self, int nodeName){
 
 // Check if an edge already exists
 bool is_edge_exists(Graph* self, int edgeName){
-  for(int i = 0; i < self->nbMaxNodes; i++){
+  for(size_t i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
       if(edgeExist(self->adjList[i], edgeName)){
         return true;
@@ -223,7 +223,7 @@ int remove_node(Graph *self, int nodeName){
     return 10;
   }
   // Deleting edges linked to the node
-  for(int i = 0; i < self->nbMaxNodes; i++){
+  for(size_t i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
       deleteEdgeFromNodeName(&self->adjList[i], nodeName);
     }
@@ -247,7 +247,7 @@ int hasNoErrorInArray(int errors[], int size) {
 //Delete an edge
 int remove_edge(Graph *self, int edgeName){
   int error[self->nbMaxNodes];
-  for(int i = 0; i < self->nbMaxNodes; i++){
+  for(size_t i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
       error[i] = deleteEdge(&self->adjList[i], edgeName);
     }
@@ -265,10 +265,10 @@ int output_graph_to_stream(Graph *self, FILE *stream){
     fputs("n\n", stream);
   }
   fputs("# node: neighbours", stream);
-  for(int i = 0; i < self->nbMaxNodes; i++){
+  for(size_t i = 0; i < self->nbMaxNodes; i++){
     if(is_node_exists(self, i)){
       fputs("\n", stream);
-      fprintf(stream, "%d: ", i+1);
+      fprintf(stream, "%zu: ", i+1);
       outputList(self->adjList[i], stream);
     }
   }

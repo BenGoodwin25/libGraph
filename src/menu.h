@@ -3,8 +3,6 @@
 
 #include <graph.h>
 
-#define VERSION "0.0.1"
-
 #define MAX_PATH_LENGTH 256
 #define MAX_DIGIT_LENGTH 10
 

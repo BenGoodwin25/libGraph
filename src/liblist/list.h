@@ -1,6 +1,10 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "log.h"
 
 typedef struct _neighbour {
@@ -9,13 +13,6 @@ typedef struct _neighbour {
 	int weight;
 	struct _neighbour *nextNeighbour;
 } Neighbour;
-
-typedef struct _firstNeighbour {
-	Neighbour first;
-} firstNeighbour;
-
-//creation
-Neighbour createList();
 
 bool edgeExist(Neighbour *self, int edgeName);
 
@@ -36,9 +33,6 @@ int destroyList(Neighbour** self);
 
 //vide
 bool isEmptyList(const Neighbour* self);
-
-//taille
-size_t listSize(const Neighbour* self);
 
 // écrit toute la liste dans le stream (pas de retour à la ligne)
 int outputList(Neighbour *self, FILE *stream);

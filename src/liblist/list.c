@@ -1,15 +1,4 @@
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdio.h>
-
 #include "list.h"
-
-Neighbour createList(){
-  Neighbour self;
-  self.nextNeighbour = NULL;
-  return self;
-}
-
 
 bool edgeExist(Neighbour *self, int edgeName){
   Neighbour *tmp;
@@ -76,7 +65,6 @@ int deleteEdge(Neighbour** self, int edgeName){
     trash=tmp->nextNeighbour->nextNeighbour;
     free(tmp->nextNeighbour);
     tmp->nextNeighbour=trash;
-    //LOG_INFO("Edge deleted\n");
     error=false;
   }
   if(error){
@@ -114,28 +102,12 @@ bool isEmptyList(const Neighbour* self){
   }
 }
 
-size_t listSize(const Neighbour* self){
-  if(isEmptyList(self)){
-    return 0;
-  } else {
-    Neighbour visit;
-    visit.nextNeighbour = self->nextNeighbour;
-    size_t size = 1;
-    while(visit.nextNeighbour->nextNeighbour != NULL){
-      visit.nextNeighbour=visit.nextNeighbour->nextNeighbour;
-      size+=1;
-    }
-    return size;
-  }
-}
-
 int outputList(Neighbour *self, FILE *stream){
   if(self != NULL) {
     Neighbour *tmp=self;
     while(tmp != NULL){
       if(tmp->neighbour != -1){
         fprintf(stream,"(%d/%d)", tmp->neighbour+1, tmp->edgeName);
-        //Yes all that for a ", " ...
         if(tmp->nextNeighbour != NULL && tmp->nextNeighbour->neighbour != -1){
           fprintf(stream,", ");
         }
